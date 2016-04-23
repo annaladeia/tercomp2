@@ -28,6 +28,11 @@
     {!! Form::text('nickname', null, ['class' => 'form-control']) !!}
 </div>
 
+<div class="form-group">
+    {!! Form::label('differential', 'Discriminateur:', ['class' => 'control-label']) !!}
+    {!! Form::text('differential', null, ['class' => 'form-control']) !!}
+</div>
+
 <div class="form-group df-group">
     {!! Form::label('related_type[]', 'Lien Familial:', ['class' => 'control-label']) !!}
     <div class="form-inline form-group df-content hide">

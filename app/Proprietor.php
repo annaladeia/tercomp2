@@ -19,6 +19,7 @@ class Proprietor extends Model
         'nickname',
         'residence',
         'occupation',
+        'differential',
         'comments'
     ];
     
@@ -38,9 +39,7 @@ class Proprietor extends Model
     
     public function getFieldDisplayAttribute()
     {
-        $name = $this->name . ", " . $this->first_name;
-        if ($this->nickname)
-            $name .= " (" . $this->nickname . ")";
+        $name = $this->name . ", " . $this->first_name . " " . $this->nickname . " (" . $this->occupation . ") " . $this->differential;
         return $name;
     }
 }

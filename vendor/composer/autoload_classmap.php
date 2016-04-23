@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddDifferentialToProprietors' => $baseDir . '/database/migrations/2016_04_23_165556_add_differential_to_proprietors.php',
     'CreateFamilyRelationsTable' => $baseDir . '/database/migrations/2016_04_16_102927_create_family_relations_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateProprietorRelationTable' => $baseDir . '/database/migrations/2016_04_16_123809_create_proprietor_relation_table.php',

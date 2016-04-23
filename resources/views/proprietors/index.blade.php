@@ -14,6 +14,7 @@
         <th>Nom</th>
         <th>Prenom</th>
         <th>Surnom</th>
+        <th>Discriminateur</th>
         <th>Lieu de residence</th>
         <th>Métier / Statut</th>
         <th></th>
@@ -24,6 +25,7 @@
         <td>{{ $data->name }}</td>
         <td>{{ $data->first_name }}</td>
         <td>{{ $data->nickname }}</td>
+        <td>{{ $data->differential }}</td>
         <td>{{ $data->residence }}</td>
         <td>{{ $data->occupation }}</td>
         <td class="text-right"><a href="{{ route('proprietors.show', $data->id) }}" class="btn btn-sm btn-info">View</a>

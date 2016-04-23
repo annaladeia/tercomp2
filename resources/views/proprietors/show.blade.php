@@ -11,6 +11,8 @@
 <dl class="dl-horizontal">
     <dt>Surnom</dt>
     <dd>{{ $data->nickname }}</dd>
+    <dt>Discriminateur</dt>
+    <dd>{{ $data->differential }}</dd>
     <dt>Lien Familial</dt>
     <dd>
     @foreach ($data->relatedProprietors as $proprietor)
