@@ -7,7 +7,6 @@ var forms = {
     },
     
     focusOnFirstField: function() {
-        console.log(123);
         $(".form-group:first input, .form-group:first textarea").focus();
     },
     
