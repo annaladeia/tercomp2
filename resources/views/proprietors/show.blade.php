@@ -6,8 +6,6 @@
 <p class="lead">{{ $data->first_name }}</p>
 <hr>
 
-@include('partials.alerts.success')
-
 <dl class="dl-horizontal">
     <dt>Surnom</dt>
     <dd>{{ $data->nickname }}</dd>
@@ -25,6 +23,12 @@
     <dd>{{ $data->residence }}</dd>
     <dt>Métier / Statut</dt>
     <dd>{{ $data->occupation }}</dd>
+    <dt>Parcelles</dt>
+    <dd>
+    @foreach ($data->parcels as $parcel)
+    <a href="{{ route('parcels.show', $parcel->id) }}">Parcelle ID {{ $parcel->id }}</a><br/>
+    @endforeach
+    </dd>
     <dt>Autre renseigment</dt>
     <dd>{!! nl2br(e($data->comments)) !!}</dd>
 </dl>

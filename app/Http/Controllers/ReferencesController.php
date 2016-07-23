@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Place;
+use App\Reference;
 use Session;
 
-class PlacesController extends Controller
+class ReferencesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,9 +21,9 @@ class PlacesController extends Controller
      */
     public function index()
     {
-        $data = Place::orderBy('name', 'asc')->get();
+        $data = Reference::orderBy('name', 'asc')->get();
 
-        return view('places.index')->withData($data);
+        return view('references.index')->withData($data);
     }
 
     /**
@@ -33,11 +33,11 @@ class PlacesController extends Controller
      */
     public function create()
     {
-        return view('places.create');
+        return view('references.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * ['variable']tore a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -50,17 +50,17 @@ class PlacesController extends Controller
 
         $input = $request->all();
         
-        $place = Place::create($input);
+        $reference = Reference::create($input);
         
-        Session::flash('flash_message', 'Toponyme successfully added.');
+        Session::flash('flash_message', 'Confront invariant successfully added.');
     
         if ($input['redirect'] == 'edit')
             
-            return redirect()->route('places.edit', $place);
+            return redirect()->route('references.edit', $reference);
     
         elseif ($input['redirect'] == 'new')
             
-            return redirect()->route('places.create');
+            return redirect()->route('references.create');
     }
 
     /**
@@ -71,9 +71,9 @@ class PlacesController extends Controller
      */
     public function show($id)
     {
-        $data = Place::findOrFail($id);
+        $data = Reference::findOrFail($id);
         
-        return view('places.show')->withData($data);
+        return view('references.show')->withData($data);
     }
 
     /**
@@ -84,9 +84,9 @@ class PlacesController extends Controller
      */
     public function edit($id)
     {
-        $data = Place::findOrFail($id);
+        $data = Reference::findOrFail($id);
         
-        return view('places.edit', compact('data'));
+        return view('references.edit', compact('data'));
     }
 
     /**
@@ -98,7 +98,7 @@ class PlacesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $place = Place::findOrFail($id);
+        $reference = Reference::findOrFail($id);
 
         $this->validate($request, [
             'name' => 'required'
@@ -106,17 +106,17 @@ class PlacesController extends Controller
     
         $input = $request->all();
     
-        $place->fill($input)->save();
+        $reference->fill($input)->save();
     
-        Session::flash('flash_message', 'Toponyme successfully modified.');
+        Session::flash('flash_message', 'Confront invariant successfully modified.');
     
         if ($input['redirect'] == 'edit')
             
-            return redirect()->route('places.edit', $id);
+            return redirect()->route('references.edit', $id);
     
         elseif ($input['redirect'] == 'new')
             
-            return redirect()->route('places.create');
+            return redirect()->route('references.create');
     }
 
     /**
@@ -127,13 +127,13 @@ class PlacesController extends Controller
      */
     public function destroy($id)
     {
-        $data = Place::findOrFail($id);
+        $data = Reference::findOrFail($id);
 
         $data->delete();
     
-        Session::flash('flash_message', 'Toponyme successfully deleted.');
+        Session::flash('flash_message', 'Confront invariant successfully deleted.');
     
-        return redirect()->route('places.index');
+        return redirect()->route('references.index');
     }
 
 }

@@ -17,6 +17,37 @@ function dfGroup($el) {
     self.content = $el.find(".df-content");
     self.container = $el.find(".df-container");
     
+    //add a dynamic form section
+    self.add = function(silent, noDelete) {
+        //clone content
+        var clonedContent = self.content.clone();
+        
+        //clone content and append to container
+        clonedContent.appendTo(self.container);
+        
+        //init select2 for new content
+        select2.add(clonedContent, ! silent);
+        
+        //init handleToggle
+        forms.handleToggle(clonedContent);
+    
+        if (noDelete) {
+            
+            clonedContent.find(".df-delete").remove();
+        
+        } else {
+        
+            //handle delete btn click
+            clonedContent.find(".df-delete").click(function() { self.delete(clonedContent) });
+        }
+        
+    }
+    
+    //delete a dynamic form section
+    self.delete = function(content) {
+        content.remove();
+    }
+    
     //remove select2 before creating content clone
     select2.delete(self.content);
     
@@ -29,25 +60,9 @@ function dfGroup($el) {
     //handle del btn click
     self.btnDel.click(function() {self.delete($(this).parents(".df-content-item")) });
     
-    //add a dynamic form section
-    self.add = function() {
-        //clone content
-        var clonedContent = self.content.clone();
-        
-        //clone content and append to container
-        clonedContent.appendTo(self.container);
-        
-        //init select2 for new content
-        select2.add(clonedContent, true);
-    
-        //handle add btn click
-        clonedContent.find(".df-delete").click(function() { self.delete(clonedContent) });
-        
-    }
-    
-    //delete a dynamic form section
-    self.delete = function(content) {
-        content.remove();
+    //add first record
+    if (! self.el.hasClass('df-hidden')) {
+        self.add(true, true);
     }
 }
 

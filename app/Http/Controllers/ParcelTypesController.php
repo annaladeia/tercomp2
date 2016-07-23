@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Place;
+use App\ParcelType;
 use Session;
 
-class PlacesController extends Controller
+class ParcelTypesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,9 +21,9 @@ class PlacesController extends Controller
      */
     public function index()
     {
-        $data = Place::orderBy('name', 'asc')->get();
+        $data = ParcelType::orderBy('name', 'asc')->get();
 
-        return view('places.index')->withData($data);
+        return view('parceltypes.index')->withData($data);
     }
 
     /**
@@ -33,7 +33,7 @@ class PlacesController extends Controller
      */
     public function create()
     {
-        return view('places.create');
+        return view('parceltypes.create');
     }
 
     /**
@@ -50,17 +50,17 @@ class PlacesController extends Controller
 
         $input = $request->all();
         
-        $place = Place::create($input);
+        $parceltype = ParcelType::create($input);
         
-        Session::flash('flash_message', 'Toponyme successfully added.');
+        Session::flash('flash_message', 'Nature successfully added.');
     
         if ($input['redirect'] == 'edit')
             
-            return redirect()->route('places.edit', $place);
+            return redirect()->route('parceltypes.edit', $parceltype);
     
         elseif ($input['redirect'] == 'new')
             
-            return redirect()->route('places.create');
+            return redirect()->route('parceltypes.create');
     }
 
     /**
@@ -71,9 +71,9 @@ class PlacesController extends Controller
      */
     public function show($id)
     {
-        $data = Place::findOrFail($id);
+        $data = ParcelType::findOrFail($id);
         
-        return view('places.show')->withData($data);
+        return view('parceltypes.show')->withData($data);
     }
 
     /**
@@ -84,9 +84,9 @@ class PlacesController extends Controller
      */
     public function edit($id)
     {
-        $data = Place::findOrFail($id);
+        $data = ParcelType::findOrFail($id);
         
-        return view('places.edit', compact('data'));
+        return view('parceltypes.edit', compact('data'));
     }
 
     /**
@@ -98,7 +98,7 @@ class PlacesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $place = Place::findOrFail($id);
+        $parceltype = ParcelType::findOrFail($id);
 
         $this->validate($request, [
             'name' => 'required'
@@ -106,17 +106,17 @@ class PlacesController extends Controller
     
         $input = $request->all();
     
-        $place->fill($input)->save();
+        $parceltype->fill($input)->save();
     
-        Session::flash('flash_message', 'Toponyme successfully modified.');
+        Session::flash('flash_message', 'Nature successfully modified.');
     
         if ($input['redirect'] == 'edit')
             
-            return redirect()->route('places.edit', $id);
+            return redirect()->route('parceltypes.edit', $id);
     
         elseif ($input['redirect'] == 'new')
             
-            return redirect()->route('places.create');
+            return redirect()->route('parceltypes.create');
     }
 
     /**
@@ -127,13 +127,13 @@ class PlacesController extends Controller
      */
     public function destroy($id)
     {
-        $data = Place::findOrFail($id);
+        $data = ParcelType::findOrFail($id);
 
         $data->delete();
     
-        Session::flash('flash_message', 'Toponyme successfully deleted.');
+        Session::flash('flash_message', 'Nature successfully deleted.');
     
-        return redirect()->route('places.index');
+        return redirect()->route('parceltypes.index');
     }
 
 }

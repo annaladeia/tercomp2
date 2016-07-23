@@ -10,7 +10,15 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        $this->call(FamilyRelationsTableSeeder::class);
+    {   
+        $relations = ['frère', 'fils', 'fille', 'père', 'épouse', 'mari', 'veuve', 'héritier', 'gendre', 'jeune fils', 'jeune fille', 'sœur', 'mère'];
+        
+        foreach ($relations as $relation)
+            DB::table('family_relations')->insert(['name' => $relation]);
+        
+        $types = ['Bassecourt', 'Bois', 'Borde', 'Boutique', 'Boutique de forge', 'Cantier', 'Causses', 'Chay', 'Château', 'Chenerier', 'Colombier', 'Garenne', 'Grange', 'Jardin', 'Maison', 'Métérie', 'Moulin à vent', 'Partie de maison', 'Patus', 'Pesquier', 'Pigeonnier', 'Plantier', 'Pré', 'Sol', 'Terre', 'Tuillerie', 'Verger', 'Vigne', 'Vignette'];
+        
+        foreach ($types as $type)
+            DB::table('parcel_types')->insert(['name' => $type]);
     }
 }

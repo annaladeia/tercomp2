@@ -17,9 +17,11 @@
       <a class="navbar-brand" href="{{ route('home') }}">Tercomp</a>
     </div>
     <div class="nav navbar-nav navbar-right">
-        <li {{{ (Request::is('proprietors') || Request::is('proprietors/*') ? 'class=active' : '') }}}><a href="{{ route('proprietors.index') }}">Propriétaires</a></li>
         <li {{{ (Request::is('parcels') || Request::is('parcels/*') ? 'class=active' : '') }}}><a href="{{ route('parcels.index') }}">Parcelles</a></li>
+        <li {{{ (Request::is('proprietors') || Request::is('proprietors/*') ? 'class=active' : '') }}}><a href="{{ route('proprietors.index') }}">Propriétaires</a></li>
         <li {{{ (Request::is('places') || Request::is('places/*') ? 'class=active' : '') }}}><a href="{{ route('places.index') }}">Toponymes</a></li>
+        <li {{{ (Request::is('parceltypes') || Request::is('parceltypes/*') ? 'class=active' : '') }}}><a href="{{ route('parceltypes.index') }}">Natures</a></li>
+        <li {{{ (Request::is('references') || Request::is('references/*') ? 'class=active' : '') }}}><a href="{{ route('references.index') }}">Confronts</a></li>
     </div>
   </div>
 </nav>
@@ -27,6 +29,10 @@
 <main>
     <div class="container">
         @yield('content')
+    </div>
+    
+    <div class="form-group">
+        &nbsp;
     </div>
 </main>
 

@@ -2,11 +2,39 @@
 
 @section('content')
 
-{{--
-<h1>Welcome Home</h1>
-<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, possimus, ullam? Deleniti dicta eaque facere, facilis in inventore mollitia officiis porro totam voluptatibus! Adipisci autem cumque enim explicabo, iusto sequi.</p>
+<h1>Parcelles</h1>
+<p class="lead">Here's a list of all parcelles. <a href="{{ route('parcels.create') }}">Add a new one?</a></p>
 <hr>
---}}
 
+@include('partials.alerts.success')
+
+<table class="table table-striped">
+    <tr>
+        <th>#</th>
+        <th>Propriétaire(s)</th>
+        <th>Page / folio</th>
+        <th></th>
+    </tr>
+@foreach($data as $data)
+    <tr>
+        <td>{{ $data->id }}</td>
+        <td>@for ($i = 0; $i < count($data->proprietors); $i++) @if ($i > 0) - @endif {{ $data->proprietors[$i]->field_display }} @endfor</td>
+        
+        <td>{{ $data->page_number }} ({{ $data->front ? 'recto' : 'verso'}})</td>
+        <td class="text-right"><a href="{{ route('parcels.show', $data->id) }}" class="btn btn-sm btn-info">View</a>
+        <a href="{{ route('parcels.edit', $data->id) }}" class="btn btn-sm btn-primary">Edit</a>&nbsp;
+        {!! Form::open([
+            'method' => 'DELETE',
+            'route' => ['parcels.destroy', $data->id],
+            'class' => 'pull-right'
+        ]) !!}
+            {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger']) !!}
+        {!! Form::close() !!}</td>
+    </tr>
+@endforeach
+</table>
+
+
+    <a href="{{ route('parcels.create') }}" class="btn btn-success pull-right">Add new Parcelle</a>
 
 @stop

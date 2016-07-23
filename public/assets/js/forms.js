@@ -1,7 +1,8 @@
 var forms = {
     
     init: function() {
-        this.handleRedirect();   
+        this.handleRedirect();
+        this.handleToggle($("body"));
     },
     
     handleRedirect: function() {
@@ -11,6 +12,17 @@ var forms = {
             
             $form.find("[name=redirect]").val('edit');
             $form.submit();
+        });
+    },
+    
+    handleToggle: function($el) {
+        
+        $el.find(".form-toggle").change(function() {
+            var value = $(this).val(),
+                $options = $(this).parents(".df-content-item").find(".form-toggle-option");
+               
+            $options.addClass('hide');
+            $options.filter(".form-toggle-option-" + value.toString()).removeClass('hide');
         });
     }
 }

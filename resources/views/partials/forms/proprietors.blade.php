@@ -33,7 +33,7 @@
     {!! Form::text('differential', null, ['class' => 'form-control']) !!}
 </div>
 
-<div class="form-group df-group">
+<div class="form-group df-group df-hidden">
     {!! Form::label('related_type[]', 'Lien Familial:', ['class' => 'control-label']) !!}
     <div class="form-inline form-group df-content hide">
         <div class="form-group">

@@ -158,65 +158,19 @@ class ProprietorsController extends Controller
         $syncArray = [];
         
         if (array_key_exists('related_proprietor', $input)) {
-        
-            // //loop through related proprietors
-            // foreach ($proprietor->relatedProprietors as $relProp) {
-                
-            //     //check if prop id in related proprietor input array
-            //     if (in_array($relProp->id, $input['related_proprietor'])) {
-                        
-            //         //get index in input array, we need it later
-            //         $i = array_search($relProp->id, $input['related_proprietor']);
-                        
-            //         //remove element from related propietor input array so it won't get inserted again
-            //         unset($input['related_proprietor'][$i]);
-                    
-            //         //check if related type is set in input array
-            //         if (array_key_exists('related_type', $input) && array_key_exists($i, $input['related_type'])) {
-                        
-            //             //check if family relation id matches with input
-            //             if ($relProp->family_relation_id != $input['related_type'][$i]) {
-                            
-            //                 //if not, update pivot record with new family relation id
-            //                 $relProp->updateExistingPivot($relProp->id, ['family_relation_id' => $input['related_type'][$i]]);
-            //             }
-                        
-            //         } else {
-            //             //remove related proprietor from DB
-            //             $propietor->relatedProprietors()->detach($relProp->id);
-            //         }
-                    
-                       
-            //     } else {
-            //         //remove related proprietor from DB
-            //         $propietor->relatedProprietors()->detach($relProp->id);
-            //     }
-                
-            // }
-        
-            //loop
             
             foreach ($input['related_proprietor'] as $i => $relId) {
                 
                 if (array_key_exists('related_type', $input) && array_key_exists($i, $input['related_type'])) {
-                
-                    //$proprietor->relatedProprietors()->attach($relId, ['family_relation_id' => $input['related_type'][$i]]);
                     
                     $syncArray[$relId] = array('family_relation_id' => $input['related_type'][$i]);
-                    
-                    
                 
                 }
                 
             }
-            
-        // } else {
-        //     //delete all related proprietors
-        // }
         
         }
         
         $proprietor->relatedProprietors()->sync($syncArray);
-        //$proprietor->relatedProprietors()->sync([1, 2, 3]);
     }    
 }

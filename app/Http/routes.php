@@ -31,4 +31,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('proprietors', 'ProprietorsController');
     Route::resource('parcels', 'ParcelsController');
     Route::resource('places', 'PlacesController');
+    Route::resource('parceltypes', 'ParcelTypesController');
+    Route::resource('references', 'ReferencesController');
 });

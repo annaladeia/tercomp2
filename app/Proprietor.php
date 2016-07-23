@@ -23,10 +23,16 @@ class Proprietor extends Model
         'comments'
     ];
     
-    // public function relatedProprietors()
-    // {
-    //     return $this->belongsToMany('App\Proprietor', 'proprietor_relation', 'proprietor_id', 'related_proprietor_id')->withPivot('family_relation_id')->withTimestamps();
-    // }
+    public function parcels()
+    {
+        return $this->belongsToMany('App\Parcel');
+    }
+    
+    public function parcelConnections()
+    {
+        return $this->hasMany('App\ParcelConnection')
+                    ->withTimestamps();
+    }
     
     public function relatedProprietors()
     {
@@ -39,7 +45,19 @@ class Proprietor extends Model
     
     public function getFieldDisplayAttribute()
     {
-        $name = $this->name . ", " . $this->first_name . " " . $this->nickname . " (" . $this->occupation . ") " . $this->differential;
+        $name = $this->name . ", " . $this->first_name;
+        
+        if ($this->nickname) {
+            $name .= " " . $this->nickname;
+        }
+        
+        if ($this->occupation) {
+            $name .= " (" . $this->occupation . ")";
+        }
+        
+        if ($this->differential) {
+            $name .= " " . $this->differential;
+        }
         return $name;
     }
 }
