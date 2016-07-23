@@ -15,6 +15,7 @@
             <th>Nom</th>
             <th>Prenom</th>
             <th>Surnom</th>
+            <th>Folio</th>
             <th>Discriminateur</th>
             <th>Lieu de residence</th>
             <th>Métier / Statut</th>
@@ -28,6 +29,7 @@
             <td>{{ $data->name }}</td>
             <td>{{ $data->first_name }}</td>
             <td>{{ $data->nickname }}</td>
+            <td>{{ $data->page }}</td>
             <td>{{ $data->differential }}</td>
             <td>{{ $data->residence }}</td>
             <td>{{ $data->occupation }}</td>

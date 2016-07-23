@@ -20,7 +20,8 @@ class Proprietor extends Model
         'residence',
         'occupation',
         'differential',
-        'comments'
+        'comments',
+        'page'
     ];
     
     public function parcels()

@@ -29,6 +29,11 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('page', 'Folio:', ['class' => 'control-label']) !!}
+    {!! Form::text('page', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group">
     {!! Form::label('differential', 'Discriminateur:', ['class' => 'control-label']) !!}
     {!! Form::text('differential', null, ['class' => 'form-control']) !!}
 </div>

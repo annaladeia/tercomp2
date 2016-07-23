@@ -9,6 +9,8 @@
 <dl class="dl-horizontal">
     <dt>Surnom</dt>
     <dd>{{ $data->nickname }}</dd>
+    <dt>Folio</dt>
+    <dd>{{ $data->page }}</dd>
     <dt>Discriminateur</dt>
     <dd>{{ $data->differential }}</dd>
     <dt>Lien Familial</dt>
