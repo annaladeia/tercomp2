@@ -49,7 +49,7 @@ class ProprietorsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required'
+            
         ]);
 
         $input = $request->all();
@@ -110,7 +110,7 @@ class ProprietorsController extends Controller
         $proprietor = Proprietor::findOrFail($id);
 
         $this->validate($request, [
-            'name' => 'required'
+        
         ]);
     
         $input = $request->all();
