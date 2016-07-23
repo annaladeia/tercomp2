@@ -3,6 +3,12 @@ var forms = {
     init: function() {
         this.handleRedirect();
         this.handleToggle($("body"));
+        this.focusOnFirstField();
+    },
+    
+    focusOnFirstField: function() {
+        console.log(123);
+        $(".form-group:first input, .form-group:first textarea").focus();
     },
     
     handleRedirect: function() {
