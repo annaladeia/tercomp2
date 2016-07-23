@@ -9,29 +9,32 @@
 @include('partials.alerts.success')
 
 <table class="table table-striped">
-    <tr>
-        <th>#</th>
-        <th>Nom</th>
-        <th></th>
-    </tr>
-@foreach($data as $data)
-    <tr>
-        <td>{{ $data->id }}</td>
-        <td>{{ $data->name }}</td>
-        <td class="text-right"><a href="{{ route('references.show', $data->id) }}" class="btn btn-sm btn-info">View</a>
-        <a href="{{ route('references.edit', $data->id) }}" class="btn btn-sm btn-primary">Edit</a>&nbsp;
-        {!! Form::open([
-            'method' => 'DELETE',
-            'route' => ['references.destroy', $data->id],
-            'class' => 'pull-right'
-        ]) !!}
-            {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger']) !!}
-        {!! Form::close() !!}</td>
-    </tr>
-@endforeach
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th class="no-sort"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach($data as $data)
+        <tr>
+            <td>{{ $data->id }}</td>
+            <td>{{ $data->name }}</td>
+            <td class="text-right"><a href="{{ route('references.show', $data->id) }}" class="btn btn-sm btn-info">View</a>
+            <a href="{{ route('references.edit', $data->id) }}" class="btn btn-sm btn-primary">Edit</a>&nbsp;
+            {!! Form::open([
+                'method' => 'DELETE',
+                'route' => ['references.destroy', $data->id],
+                'class' => 'pull-right'
+            ]) !!}
+                {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger']) !!}
+            {!! Form::close() !!}</td>
+        </tr>
+    @endforeach
+    </tbody>
 </table>
 
-
-    <a href="{{ route('references.create') }}" class="btn btn-success pull-right">Add new Confront</a>
+<br/><a href="{{ route('references.create') }}" class="btn btn-success pull-right">Add new Confront</a>
 
 @stop

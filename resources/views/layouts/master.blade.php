@@ -6,7 +6,8 @@
 <title>Tercomp</title>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" />
+<link rel="stylesheet" href="//cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.css"/>
 <link href="/assets/css/select2-bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -38,9 +39,11 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+<script src="//cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.js"></script>
 <script src="/assets/js/select2.js"></script>
 <script src="/assets/js/dynamic-forms.js"></script>
 <script src="/assets/js/forms.js"></script>
+<script src="/assets/js/tables.js"></script>
 
 </body>
 </html>
