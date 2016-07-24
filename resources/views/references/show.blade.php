@@ -22,7 +22,7 @@
             'route' => ['references.destroy', $data->id],
             'class' => 'pull-right'
         ]) !!}
-            {!! Form::submit('Delete Confront', ['class' => 'btn btn-danger']) !!}
+            {!! Form::submit('Delete Confront', ['class' => 'btn btn-confirm-delete btn-danger']) !!}
         {!! Form::close() !!}
         <div class="pull-right">&nbsp;</div>
         <a href="{{ route('references.index') }}" class="btn btn-link">Back to all Confronts</a>

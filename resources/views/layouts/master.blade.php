@@ -44,6 +44,7 @@
 <script src="/assets/js/dynamic-forms.js"></script>
 <script src="/assets/js/forms.js"></script>
 <script src="/assets/js/tables.js"></script>
+<script src="/assets/js/actions.js"></script>
 
 </body>
 </html>

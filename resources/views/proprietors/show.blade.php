@@ -46,7 +46,7 @@
             'route' => ['proprietors.destroy', $data->id],
             'class' => 'pull-right'
         ]) !!}
-            {!! Form::submit('Delete Propriétaire', ['class' => 'btn btn-danger']) !!}
+            {!! Form::submit('Delete Propriétaire', ['class' => 'btn btn-confirm-delete btn-danger']) !!}
         {!! Form::close() !!}
         <div class="pull-right">&nbsp;</div>
         <a href="{{ route('proprietors.index') }}" class="btn btn-link">Back to all Propriétaires</a>

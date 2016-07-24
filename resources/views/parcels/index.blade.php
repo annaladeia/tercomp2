@@ -31,7 +31,7 @@
                 'route' => ['parcels.destroy', $data->id],
                 'class' => 'pull-right'
             ]) !!}
-                {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger']) !!}
+                {!! Form::submit('Delete', ['class' => 'btn btn-confirm-delete btn-sm btn-danger']) !!}
             {!! Form::close() !!}</td>
         </tr>
     @endforeach

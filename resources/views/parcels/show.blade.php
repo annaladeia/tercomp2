@@ -76,7 +76,7 @@
             'route' => ['parcels.destroy', $data->id],
             'class' => 'pull-right'
         ]) !!}
-            {!! Form::submit('Delete Parcelle', ['class' => 'btn btn-danger']) !!}
+            {!! Form::submit('Delete Parcelle', ['class' => 'btn btn-confirm-delete btn-danger']) !!}
         {!! Form::close() !!}
         <div class="pull-right">&nbsp;</div>
         <a href="{{ route('parcels.index') }}" class="btn btn-link">Back to all Parcelles</a>
