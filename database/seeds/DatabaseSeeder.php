@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {   
-        $relations = ['frère', 'fils', 'fille', 'père', 'épouse', 'mari', 'veuve', 'héritier', 'gendre', 'jeune fils', 'jeune fille', 'sœur', 'mère'];
+        $relations = ['frère', 'fils', 'fille', 'père', 'épouse', 'mari', 'veuve', 'héritier', 'gendre', 'jeune fils', 'jeune fille', 'sœur', 'mère', 'héritiers', 'neveu', 'nièce', 'beaufils'];
         
         foreach ($relations as $relation)
             DB::table('family_relations')->insert(['name' => $relation]);
