@@ -7,6 +7,8 @@
 <hr>
 
 <dl class="dl-horizontal">
+    <dt>Institution</dt>
+    <dd>{{ $data->institution }}</dd>
     <dt>Surnom</dt>
     <dd>{{ $data->nickname }}</dd>
     <dt>Folio</dt>

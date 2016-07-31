@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddDifferentialToProprietors' => $baseDir . '/database/migrations/2016_04_23_165556_add_differential_to_proprietors.php',
     'AddFolioToProprietorsTable' => $baseDir . '/database/migrations/2016_07_23_152246_add_folio_to_proprietors_table.php',
+    'AddInstitutionToProprietors' => $baseDir . '/database/migrations/2016_07_31_133334_add_institution_to_proprietors.php',
     'CreateFamilyRelationsTable' => $baseDir . '/database/migrations/2016_04_16_102927_create_family_relations_table.php',
     'CreateParcelConnectionsTable' => $baseDir . '/database/migrations/2016_04_30_141528_create_parcel_connections_table.php',
     'CreateParcelParcelTypeTable' => $baseDir . '/database/migrations/2016_04_30_135356_create_parcel_parcel_type_table.php',

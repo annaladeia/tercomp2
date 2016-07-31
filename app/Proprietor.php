@@ -14,6 +14,7 @@ class Proprietor extends Model
      * @var array
      */
     protected $fillable = [
+        'institution',
         'name',
         'first_name',
         'nickname',

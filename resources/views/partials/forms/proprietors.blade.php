@@ -14,6 +14,11 @@
 @endif
 
 <div class="form-group">
+    {!! Form::label('institution', 'Institution:', ['class' => 'control-label']) !!}
+    {!! Form::text('institution', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group">
     {!! Form::label('name', 'Nom:', ['class' => 'control-label']) !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
