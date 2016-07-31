@@ -16,7 +16,7 @@
     <dt>Lien Familial</dt>
     <dd>
     @foreach ($data->relatedProprietors as $proprietor)
-    {{ $proprietor->family_relation }} de {{ $proprietor->first_name }} {{ $proprietor->name }}<br/>
+    {{ $proprietor->family_relation }} de <a href="{{ route('proprietors.show', $proprietor->id) }}">{{ $proprietor->field_display }}</a><br/>
     @endforeach
     </dd>
     <dt></dt>
