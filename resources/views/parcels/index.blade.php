@@ -14,7 +14,7 @@
             <th>#</th>
             <th>Propriétaire(s)</th>
             <th>Page / folio</th>
-            <th class="no-sort"></th>
+            <th class="table__buttons no-sort"></th>
         </tr>
     </thead>
     <tbody>
@@ -24,14 +24,14 @@
             <td>@for ($i = 0; $i < count($data->proprietors); $i++) @if ($i > 0) - @endif {{ $data->proprietors[$i]->field_display }} @endfor</td>
             
             <td>{{ $data->page_number }} ({{ $data->front ? 'recto' : 'verso'}})</td>
-            <td class="text-right"><a href="{{ route('parcels.show', $data->id) }}" class="btn btn-sm btn-info">View</a>
-            <a href="{{ route('parcels.edit', $data->id) }}" class="btn btn-sm btn-primary">Edit</a>&nbsp;
+            <td class="table__buttons text-right"><a href="{{ route('proprietors.show', $data->id) }}" title="View record" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+            <a href="{{ route('proprietors.edit', $data->id) }}" title="Edit record" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>&nbsp;
             {!! Form::open([
                 'method' => 'DELETE',
                 'route' => ['parcels.destroy', $data->id],
                 'class' => 'pull-right'
             ]) !!}
-                {!! Form::submit('Delete', ['class' => 'btn btn-confirm-delete btn-sm btn-danger']) !!}
+                <button type="submit" class="btn btn-confirm-delete btn-sm btn-danger" title="Delete record"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
             {!! Form::close() !!}</td>
         </tr>
     @endforeach

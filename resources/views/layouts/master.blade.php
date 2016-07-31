@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" />
 <link rel="stylesheet" href="//cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.css"/>
 <link href="/assets/css/select2-bootstrap.min.css" rel="stylesheet" />
+<link href="/assets/css/custom.css" rel="stylesheet" />
 </head>
 <body>
 

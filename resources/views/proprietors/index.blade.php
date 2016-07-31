@@ -19,7 +19,7 @@
             <th>Discriminateur</th>
             <th>Lieu de residence</th>
             <th>Métier / Statut</th>
-            <th class="no-sort"></th>
+            <th class="table__buttons no-sort"></th>
         </tr>
     </thead>
     <tbody>
@@ -33,14 +33,14 @@
             <td>{{ $data->differential }}</td>
             <td>{{ $data->residence }}</td>
             <td>{{ $data->occupation }}</td>
-            <td class="text-right"><a href="{{ route('proprietors.show', $data->id) }}" class="btn btn-sm btn-info">View</a>
-            <a href="{{ route('proprietors.edit', $data->id) }}" class="btn btn-sm btn-primary">Edit</a>&nbsp;
+            <td class="table__buttons text-right"><a href="{{ route('proprietors.show', $data->id) }}" title="View record" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+            <a href="{{ route('proprietors.edit', $data->id) }}" title="Edit record" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>&nbsp;
             {!! Form::open([
                 'method' => 'DELETE',
                 'route' => ['proprietors.destroy', $data->id],
                 'class' => 'pull-right'
             ]) !!}
-                {!! Form::submit('Delete', ['class' => 'btn btn-confirm-delete btn-sm btn-danger']) !!}
+                <button type="submit" class="btn btn-confirm-delete btn-sm btn-danger" title="Delete record"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
             {!! Form::close() !!}</td>
         </tr>
     @endforeach
