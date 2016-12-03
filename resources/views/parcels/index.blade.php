@@ -24,8 +24,8 @@
             <td>@for ($i = 0; $i < count($data->proprietors); $i++) @if ($i > 0) - @endif {{ $data->proprietors[$i]->field_display }} @endfor</td>
             
             <td>{{ $data->page_number }} ({{ $data->front ? 'recto' : 'verso'}})</td>
-            <td class="table__buttons text-right"><a href="{{ route('proprietors.show', $data->id) }}" title="View record" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-            <a href="{{ route('proprietors.edit', $data->id) }}" title="Edit record" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>&nbsp;
+            <td class="table__buttons text-right"><a href="{{ route('parcels.show', $data->id) }}" title="View record" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+            <a href="{{ route('parcels.edit', $data->id) }}" title="Edit record" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>&nbsp;
             {!! Form::open([
                 'method' => 'DELETE',
                 'route' => ['parcels.destroy', $data->id],
