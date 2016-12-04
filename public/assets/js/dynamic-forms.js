@@ -30,6 +30,9 @@ function dfGroup($el) {
         
         //init handleToggle
         forms.handleToggle(clonedContent);
+        
+        //init handleViewEntity
+        forms.handleViewEntity(clonedContent);
     
         if (noDelete) {
             

@@ -35,7 +35,7 @@ class ProprietorsController extends Controller
     public function create()
     {
         $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
-        $familyRelations = FamilyRelation::orderBy('name', 'asc')->get()->lists('field_display', 'id');
+        $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('field_display', 'id');
         
         return view('proprietors.create', compact('proprietors', 'familyRelations'));
     }
@@ -93,7 +93,16 @@ class ProprietorsController extends Controller
         $data = Proprietor::with('relatedProprietors')->findOrFail($id);
         
         $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->where('id', '!=', $id)->get()->lists('field_display', 'id');
-        $familyRelations = FamilyRelation::orderBy('name', 'asc')->get()->lists('field_display', 'id');
+        switch ($data->sex) {
+            case 1:
+                $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('name_masc_display', 'id');
+                break;
+            case 2:
+                $familyRelations = FamilyRelation::orderBy('name_fem', 'asc')->get()->lists('name_fem_display', 'id');
+                break;
+            default:
+                $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('field_display', 'id');
+        }
         
         return view('proprietors.edit', compact('data', 'proprietors', 'familyRelations'));
     }
@@ -150,27 +159,78 @@ class ProprietorsController extends Controller
     /**
      * Store related proprietors in storage.
      *
-     * @param  int $proprietor, array $input
+     * @param  obj $proprietor, array $input
      * @return bool
      */
     private function storeRelatedProprietors($proprietor, $input)
     {
         $syncArray = [];
         
-        if (array_key_exists('related_proprietor', $input)) {
+        if (array_key_exists('related_connection_type', $input)) {
             
-            foreach ($input['related_proprietor'] as $i => $relId) {
+            foreach ($input['related_connection_type'] as $i => $connectionType) {
                 
-                if (array_key_exists('related_type', $input) && array_key_exists($i, $input['related_type'])) {
+                if (array_key_exists('related_type', $input) && array_key_exists($i, $input['related_type'])) { //has a relation type been choosen?
+                
+                    if ($connectionType == 1) { //existing proprietor
                     
-                    $syncArray[$relId] = array('family_relation_id' => $input['related_type'][$i]);
-                
+                        if (array_key_exists('related_proprietor', $input) && array_key_exists($i, $input['related_proprietor'])) {
+                        
+                            $syncArray[$input['related_proprietor'][$i]] = array('family_relation_id' => $input['related_type'][$i]);
+                        }
+                        
+                    } elseif ($connectionType == 2) { //new proprietor
+                    
+                        if ($input['related_proprietor_name'][$i] || $input['related_proprietor_first_name'][$i] || $input['related_proprietor_differential'][$i]) {
+                            
+                            $relProprietor = new Proprietor;
+                            $relProprietor->name = trim($input['related_proprietor_name'][$i]);
+                            $relProprietor->first_name = trim($input['related_proprietor_first_name'][$i]);
+                            $relProprietor->differential = trim($input['related_proprietor_differential'][$i]);
+                            $relProprietor->save();
+                            
+                            $syncArray[$relProprietor->id] = array('family_relation_id' => $input['related_type'][$i]);
+                        }
+                    }
                 }
-                
             }
         
         }
         
         $proprietor->relatedProprietors()->sync($syncArray);
+        
+        //get all proprietors that are currently related to this proprietor
+        foreach ($proprietor->inverseRelatedProprietors()->get() as $relatedProprietor) {
+            //check if proprietors are still related
+            if (array_key_exists($relatedProprietor->id, $syncArray)) {
+                //is relation still of the same type?
+                if ($syncArray[$relatedProprietor->id]['family_relation_id'] == $relatedProprietor->family_relation_opposite_id) {
+                    //remove key from syncArray 
+                    unset($syncArray[$relatedProprietor->id]);
+                }
+            } else {
+                //remove relation
+                $relatedProprietor->relatedProprietors()->detach($proprietor->id);
+            }
+        }
+        
+        //loop through (remainder of) $syncArray
+        foreach ($syncArray as $proprietorID => $relation) {
+            //get proprietor
+            $relatedProprietor = Proprietor::find($proprietorID);
+            
+            if ($relatedProprietor) {
+                //get opposite ID
+                $oppositeID = FamilyRelation::find($relation['family_relation_id'])->opposite_id;
+                
+                if ($oppositeID) {
+                    //set relation
+                    $relatedProprietor->relatedProprietors()->sync([$proprietor->id => ['family_relation_id' => $oppositeID]], false);
+                } else {
+                    $relatedProprietor->relatedProprietors()->detach($proprietor->id);
+                }
+            }
+        }
+        
     }    
 }

@@ -34,6 +34,24 @@
 </div>
 
 <div class="form-group">
+    
+    {!! Form::label('sex', 'Genre:', ['class' => 'control-label']) !!}
+    
+    <div>
+        <label class="radio-inline">
+            {{ Form::radio('sex', 0, true) }} Inconnu
+        </label>
+        <label class="radio-inline">
+            {{ Form::radio('sex', 1) }} Mâle
+        </label>
+        <label class="radio-inline">
+            {{ Form::radio('sex', 2) }} Femelle
+        </label>
+    </div>
+    
+</div>
+
+<div class="form-group">
     {!! Form::label('page', 'Folio:', ['class' => 'control-label']) !!}
     {!! Form::text('page', null, ['class' => 'form-control']) !!}
 </div>
@@ -51,11 +69,20 @@
         </div>
         de
         <div class="form-group">
-            {!! Form::select('related_proprietor[]', $proprietors, null, ['class' => 'df-unique form-control']) !!}
+            {!! Form::select('related_connection_type[]', [1 => 'Propriétaire enregistre', 2 => 'Nouveau propriétaire'], null, ['class' => 'form-toggle form-control']) !!}
+        </div>
+        <div class="form-group form-toggle-option form-toggle-option-1">
+            {!! Form::select('related_proprietor[]', $proprietors, null, ['class' => 'df-unique form-control form-entity']) !!}
+        </div>
+        <div class="form-group form-toggle-option form-toggle-option-2 hide">
+            {!! Form::text('related_proprietor_name[]', null, ['class' => 'form-control', 'placeholder' => 'Nom']) !!}
+            {!! Form::text('related_proprietor_first_name[]', null, ['class' => 'form-control', 'placeholder' => 'Surnom']) !!}
+            {!! Form::text('related_proprietor_differential[]', null, ['class' => 'form-control', 'placeholder' => 'Discriminateur']) !!}
         </div>
         <button class="btn btn-danger df-delete" type="button">
             <span class="glyphicon glyphicon-minus"></span>
         </button>
+        <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1" data-entity-type="proprietors">View propriétaire</a>
     </div>
     
     <div class="df-container">
@@ -67,11 +94,20 @@
             </div>
             de
             <div class="form-group">
-                {!! Form::select('related_proprietor[]', $proprietors, $proprietor->id, ['class' => 'df-unique form-control']) !!}
+                {!! Form::select('related_connection_type[]', [1 => 'Propriétaire enregistre', 2 => 'Nouveau propriétaire'], null, ['class' => 'form-toggle form-control']) !!}
+            </div>
+            <div class="form-group form-toggle-option form-toggle-option-1">
+                {!! Form::select('related_proprietor[]', $proprietors, $proprietor->id, ['class' => 'df-unique form-control form-entity']) !!}
+            </div>
+            <div class="form-group form-toggle-option form-toggle-option-2 hide">
+                {!! Form::text('related_proprietor_name[]', null, ['class' => 'form-control', 'placeholder' => 'Nom']) !!}
+                {!! Form::text('related_proprietor_first_name[]', null, ['class' => 'form-control', 'placeholder' => 'Surnom']) !!}
+                {!! Form::text('related_proprietor_differential[]', null, ['class' => 'form-control', 'placeholder' => 'Discriminateur']) !!}
             </div>
             <button class="btn btn-danger df-delete" type="button">
                 <span class="glyphicon glyphicon-minus"></span>
             </button>
+            <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1" data-entity-type="proprietors">View propriétaire</a>
         </div>
         @endforeach
         @endif

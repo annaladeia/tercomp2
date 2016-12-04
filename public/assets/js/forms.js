@@ -3,6 +3,7 @@ var forms = {
     init: function() {
         this.handleRedirect();
         this.handleToggle($("body"));
+        this.handleViewEntity($("body"));
         this.focusOnFirstField();
     },
     
@@ -28,6 +29,13 @@ var forms = {
                
             $options.addClass('hide');
             $options.filter(".form-toggle-option-" + value.toString()).removeClass('hide');
+        });
+    },
+    
+    handleViewEntity: function($el) {
+        $el.find(".form-view-entity").click(function(e) {
+            e.preventDefault();
+            window.open('/' + $(this).data('entity-type') + '/' + $(this).parents(".df-content-item").find(".form-entity").val());
         });
     }
 }
