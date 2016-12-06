@@ -34,7 +34,6 @@ class ProprietorsController extends Controller
      */
     public function create()
     {
-        //$proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
         foreach (Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get() as $proprietor) {
             $name = $proprietor->field_display;
             if (trim(str_replace(',', '', str_replace(' ', '', $name))) == '') {
@@ -112,7 +111,27 @@ class ProprietorsController extends Controller
     {
         $data = Proprietor::with('relatedProprietors')->findOrFail($id);
         
-        $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->where('id', '!=', $id)->get()->lists('field_display', 'id');
+        foreach (Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get() as $proprietor) {
+            $name = $proprietor->field_display;
+            if (trim(str_replace(',', '', str_replace(' ', '', $name))) == '') {
+                $i = 0;
+                foreach ($proprietor->relatedProprietors()->get() as $relProprietor) {
+                    if ($i > 0) $name .= ' et ';
+                    switch ($relProprietor->sex) {
+                        case 2:
+                            $familyRelation = mb_convert_case($relProprietor->name_fem, MB_CASE_TITLE);
+                            break;
+                        default:
+                            $familyRelation =  mb_convert_case($relProprietor->name_masc, MB_CASE_TITLE);
+                            break;
+                    }
+                    $name .= str_replace('(S)', '(s)', $familyRelation) . ' de ' . $relProprietor->field_display;
+                    $i ++;
+                }
+            }
+            $proprietors[$proprietor->id] = $name;
+        }
+        
         switch ($data->sex) {
             case 1:
                 $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('name_masc_display', 'id');
