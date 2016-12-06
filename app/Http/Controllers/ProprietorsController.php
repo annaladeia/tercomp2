@@ -34,7 +34,27 @@ class ProprietorsController extends Controller
      */
     public function create()
     {
-        $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
+        //$proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
+        foreach (Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get() as $proprietor) {
+            $name = $proprietor->field_display;
+            if (trim(str_replace(',', '', str_replace(' ', '', $name))) == '') {
+                $i = 0;
+                foreach ($proprietor->relatedProprietors()->get() as $relProprietor) {
+                    if ($i > 0) $name .= ' et ';
+                    switch ($relProprietor->sex) {
+                        case 2:
+                            $familyRelation = mb_convert_case($relProprietor->name_fem, MB_CASE_TITLE);
+                            break;
+                        default:
+                            $familyRelation =  mb_convert_case($relProprietor->name_masc, MB_CASE_TITLE);
+                            break;
+                    }
+                    $name .= $familyRelation . ' de ' . $relProprietor->field_display;
+                    $i ++;
+                }
+            }
+            $proprietors[$proprietor->id] = $name;
+        }
         $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('field_display', 'id');
         
         return view('proprietors.create', compact('proprietors', 'familyRelations'));
