@@ -49,7 +49,7 @@ class ProprietorsController extends Controller
                             $familyRelation =  mb_convert_case($relProprietor->name_masc, MB_CASE_TITLE);
                             break;
                     }
-                    $name .= $familyRelation . ' de ' . $relProprietor->field_display;
+                    $name .= str_replace('(S)', '(s)', $familyRelation) . ' de ' . $relProprietor->field_display;
                     $i ++;
                 }
             }
