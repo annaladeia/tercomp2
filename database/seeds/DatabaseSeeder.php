@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             [12, 'beau-frère', 'belle-sœur', 12],
             [13, 'veuf', 'veuve', 14],
             [14, 'mari ✝', 'épouse ✝', 13],
-            [15, 'héritier', 'héritière', null]
+            [15, 'héritier(s)', 'héritier(s)', null]
         );
         
         foreach ($relations as $relation)

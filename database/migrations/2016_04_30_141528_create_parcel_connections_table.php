@@ -15,8 +15,8 @@ class CreateParcelConnectionsTable extends Migration
         Schema::create('parcel_connections', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parcel_id');
-            $table->integer('proprietor_id');
-            $table->integer('reference_id');
+            $table->integer('proprietor_id')->unsigned()->nullable();
+            $table->integer('reference_id')->unsigned()->nullable();
             $table->tinyInteger('orientation');
             $table->string('comments');
             $table->timestamps();
