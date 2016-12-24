@@ -74,6 +74,24 @@ class Proprietor extends Model
         if ($this->differential) {
             $name .= " " . $this->differential;
         }
+        
+        if (trim(str_replace(',', '', str_replace(' ', '', $name))) == '') {
+            $i = 0;
+            foreach ($this->relatedProprietors()->get() as $relProprietor) {
+                if ($i > 0) $name .= ' et ';
+                switch ($relProprietor->sex) {
+                    case 2:
+                        $familyRelation = mb_convert_case($relProprietor->name_fem, MB_CASE_TITLE);
+                        break;
+                    default:
+                        $familyRelation =  mb_convert_case($relProprietor->name_masc, MB_CASE_TITLE);
+                        break;
+                }
+                $name .= str_replace('(S)', '(s)', $familyRelation) . ' de ' . $relProprietor->field_display;
+                $i ++;
+            }
+        }
+        
         return $name;
     }
 }

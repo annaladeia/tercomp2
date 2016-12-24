@@ -38,26 +38,7 @@ class ParcelsController extends Controller
      */
     public function create()
     {
-        foreach (Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get() as $proprietor) {
-            $name = $proprietor->field_display;
-            if (trim(str_replace(',', '', str_replace(' ', '', $name))) == '') {
-                $i = 0;
-                foreach ($proprietor->relatedProprietors()->get() as $relProprietor) {
-                    if ($i > 0) $name .= ' et ';
-                    switch ($relProprietor->sex) {
-                        case 2:
-                            $familyRelation = mb_convert_case($relProprietor->name_fem, MB_CASE_TITLE);
-                            break;
-                        default:
-                            $familyRelation =  mb_convert_case($relProprietor->name_masc, MB_CASE_TITLE);
-                            break;
-                    }
-                    $name .= str_replace('(S)', '(s)', $familyRelation) . ' de ' . $relProprietor->field_display;
-                    $i ++;
-                }
-            }
-            $proprietors[$proprietor->id] = $name;
-        }
+        $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
         $places = Place::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $parceltypes = ParcelType::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $references = Reference::orderBy('name', 'asc')->get()->lists('field_display', 'id');
@@ -140,26 +121,7 @@ class ParcelsController extends Controller
     public function edit($id)
     {
         $data = Parcel::findOrFail($id);
-        foreach (Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get() as $proprietor) {
-            $name = $proprietor->field_display;
-            if (trim(str_replace(',', '', str_replace(' ', '', $name))) == '') {
-                $i = 0;
-                foreach ($proprietor->relatedProprietors()->get() as $relProprietor) {
-                    if ($i > 0) $name .= ' et ';
-                    switch ($relProprietor->sex) {
-                        case 2:
-                            $familyRelation = mb_convert_case($relProprietor->name_fem, MB_CASE_TITLE);
-                            break;
-                        default:
-                            $familyRelation =  mb_convert_case($relProprietor->name_masc, MB_CASE_TITLE);
-                            break;
-                    }
-                    $name .= str_replace('(S)', '(s)', $familyRelation) . ' de ' . $relProprietor->field_display;
-                    $i ++;
-                }
-            }
-            $proprietors[$proprietor->id] = $name;
-        }
+        $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
         $places = Place::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $parceltypes = ParcelType::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $references = Reference::orderBy('name', 'asc')->get()->lists('field_display', 'id');
