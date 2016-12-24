@@ -5,6 +5,7 @@ var forms = {
         this.handleToggle($("body"));
         this.handleViewEntity($("body"));
         this.focusOnFirstField();
+        this.initKeyboardShortcuts();
     },
     
     focusOnFirstField: function() {
@@ -36,6 +37,19 @@ var forms = {
         $el.find(".form-view-entity").click(function(e) {
             e.preventDefault();
             window.open('/' + $(this).data('entity-type') + '/' + $(this).parents(".df-content-item").find(".form-entity").val());
+        });
+    },
+    
+    initKeyboardShortcuts: function() {
+        $(window).bind('keydown', function(event) {
+            if (event.ctrlKey || event.metaKey) {
+                switch (String.fromCharCode(event.which).toLowerCase()) {
+                case 's':
+                    event.preventDefault();
+                    $(".btn[type='submit']").click();
+                    break;
+                }
+            }
         });
     }
 }
