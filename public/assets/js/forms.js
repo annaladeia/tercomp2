@@ -15,9 +15,13 @@ var forms = {
     handleRedirect: function() {
         
         $(".form-btn-redirect-edit").click(function() {
-            var $form = $(this).parents("form");
+            var $this = $(this),
+                value = $(this).attr('data-redirect'),
+                $form = $this.parents("form");
             
-            $form.find("[name=redirect]").val('edit');
+            if (! value) value = 'edit';
+            
+            $form.find("[name=redirect]").val(value);
             $form.submit();
         });
     },

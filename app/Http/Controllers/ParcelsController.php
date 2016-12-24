@@ -62,7 +62,19 @@ class ParcelsController extends Controller
         $parceltypes = ParcelType::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $references = Reference::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         
-        return view('parcels.create', compact('proprietors', 'places', 'parceltypes', 'references'));
+        $data = array();
+        $preselectedProprietors = array();
+        if ($sessionProprietors = Session::get('proprietor')) {
+            foreach ($sessionProprietors as $proprietor) {
+                $preselectedProprietors[] = (object) ['id' => $proprietor];
+            }
+        }
+        
+        $data = new Parcel;
+        $data->proprietors = $preselectedProprietors;
+        $data->page_number = Session::get('page_number');
+        
+        return view('parcels.create', compact('data', 'proprietors', 'places', 'parceltypes', 'references'));
     }
 
     /**
@@ -85,14 +97,25 @@ class ParcelsController extends Controller
         $this->calcValues($parcel, $input);
         
         Session::flash('flash_message', 'Parcelle successfully added.');
-    
-        if ($input['redirect'] == 'edit')
-            
-            return redirect()->route('parcels.edit', $parcel);
-    
-        elseif ($input['redirect'] == 'new')
-            
-            return redirect()->route('parcels.create');
+        
+        switch ($input['redirect']) {
+            case 'edit':
+                return redirect()->route('parcels.edit', $id);
+                break;
+            case 'copy_proprietor_page':
+                Session::flash('proprietor', $input['proprietor']);
+                Session::flash('page_number', $input['page_number']);
+                return redirect()->route('parcels.create');
+                break;
+            case 'copy_proprietor_page_plus1':
+                Session::flash('proprietor', $input['proprietor']);
+                Session::flash('page_number', $input['page_number']+1);
+                return redirect()->route('parcels.create');
+                break;
+            case 'new':
+                return redirect()->route('parcels.create');
+                break;
+        }
     }
 
     /**
@@ -167,14 +190,25 @@ class ParcelsController extends Controller
         $this->calcValues($parcel, $input);
     
         Session::flash('flash_message', 'Parcelle successfully modified.');
-    
-        if ($input['redirect'] == 'edit')
-            
-            return redirect()->route('parcels.edit', $id);
-    
-        elseif ($input['redirect'] == 'new')
-            
-            return redirect()->route('parcels.create');
+        
+        switch ($input['redirect']) {
+            case 'edit':
+                return redirect()->route('parcels.edit', $id);
+                break;
+            case 'copy_proprietor_page':
+                Session::flash('proprietor', $input['proprietor']);
+                Session::flash('page_number', $input['page_number']);
+                return redirect()->route('parcels.create');
+                break;
+            case 'copy_proprietor_page_plus1':
+                Session::flash('proprietor', $input['proprietor']);
+                Session::flash('page_number', $input['page_number']+1);
+                return redirect()->route('parcels.create');
+                break;
+            case 'new':
+                return redirect()->route('parcels.create');
+                break;
+        }
     }
 
     /**

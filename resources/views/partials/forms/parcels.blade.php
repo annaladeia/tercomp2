@@ -1,4 +1,4 @@
-@if(isset($data))
+@if(isset($data) AND $data->id)
 
 {!! Form::model($data, [
     'method' => 'PATCH',
@@ -7,7 +7,7 @@
 
 @else
 
-{!! Form::open([
+{!! Form::model($data, [
     'route' => 'parcels.store'
 ]) !!}
 
@@ -331,7 +331,9 @@
 <div class="pull-right">
 <a href="{{ route('parcels.index') }}" class="btn btn-link">Back to all Parcelles</a>
 {!! Form::button('Save Parcelle', ['class' => 'btn btn-primary form-btn-redirect-edit']) !!}
-{!! Form::submit('Save Parcelle & Add New', ['class' => 'btn btn-primary btn-success']) !!}
+{!! Form::submit('... & Add New', ['class' => 'btn btn-primary btn-success']) !!}
+{!! Form::button('... Same proprietor, same page', ['data-redirect' => 'copy_proprietor_page', 'class' => 'btn btn-primary btn-success form-btn-redirect-edit']) !!}
+{!! Form::button('... Same proprietor, next page', ['data-redirect' => 'copy_proprietor_page_plus1', 'class' => 'btn btn-primary btn-success form-btn-redirect-edit']) !!}
 </div>
 
 {!! Form::hidden('redirect', 'new') !!}
