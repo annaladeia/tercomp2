@@ -23,7 +23,7 @@ class MigrateProfessions extends Migration
                     $professionID = $profession->id;
                 }
                 
-                if (! $professionID) {
+                if (! isset($professionID)) {
                     $profession = new Profession;
                     $profession->name = $occupation;
                     $profession->save();
