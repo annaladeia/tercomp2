@@ -20,7 +20,6 @@ class Proprietor extends Model
         'nickname',
         'sex',
         'residence',
-        'occupation',
         'differential',
         'comments',
         'page'

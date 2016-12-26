@@ -18,7 +18,6 @@
             <th>Folio</th>
             <th>Discriminateur</th>
             <th>Lieu de residence</th>
-            <th>Métier / Statut</th>
             <th class="table__buttons no-sort"></th>
         </tr>
     </thead>
@@ -32,7 +31,6 @@
             <td>{{ $data->page }}</td>
             <td>{{ $data->differential }}</td>
             <td>{{ $data->residence }}</td>
-            <td>{{ $data->occupation }}</td>
             <td class="table__buttons text-right"><a href="{{ route('proprietors.show', $data->id) }}" title="View record" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
             <a href="{{ route('proprietors.edit', $data->id) }}" title="Edit record" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>&nbsp;
             {!! Form::open([

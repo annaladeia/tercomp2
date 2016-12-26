@@ -126,12 +126,6 @@
     {!! Form::text('residence', null, ['class' => 'form-control']) !!}
 </div>
 
-<div class="form-group">
-    {!! Form::label('occupation', 'Métier / Statut:', ['class' => 'control-label']) !!}
-    {!! Form::text('occupation', null, ['class' => 'form-control']) !!}
-</div>
-
-
 <div class="form-group df-group df-hidden">
     {!! Form::label('profession[]', 'Métier:', ['class' => 'control-label']) !!}
     <div class="form-inline form-group df-content hide">
