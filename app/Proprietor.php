@@ -31,6 +31,11 @@ class Proprietor extends Model
         return $this->belongsToMany('App\Parcel');
     }
     
+    public function professions()
+    {
+        return $this->belongsToMany('App\Profession', 'proprietor_profession');
+    }
+    
     public function parcelConnections()
     {
         return $this->hasMany('App\ParcelConnection')
@@ -41,7 +46,6 @@ class Proprietor extends Model
     {
         return $this->belongsToMany('App\Proprietor', 'proprietor_relation', 'proprietor_id', 'related_proprietor_id')
             ->join('family_relations', 'proprietor_relation.family_relation_id', '=', 'family_relations.id')
-            //->addSelect('CONCAT(family_relations.name_masc, \' / \', family_relations.name_fem) as family_relation')
             ->select(\DB::raw('CONCAT(family_relations.name_masc, \' / \', family_relations.name_fem) as family_relation'), 'name_masc', 'name_fem', 'family_relations.id as family_relation_id', 'proprietors.*')
             ->withTimestamps();
     }
@@ -50,7 +54,6 @@ class Proprietor extends Model
     {
         return $this->belongsToMany('App\Proprietor', 'proprietor_relation', 'related_proprietor_id', 'proprietor_id')
             ->join('family_relations', 'proprietor_relation.family_relation_id', '=', 'family_relations.id')
-            //->addSelect('CONCAT(family_relations.name_masc, \' / \', family_relations.name_fem) as family_relation')
             ->select(\DB::raw('CONCAT(family_relations.name_masc, \' / \', family_relations.name_fem) as family_relation'), 'name_masc', 'name_fem', 'family_relations.opposite_id as family_relation_opposite_id', 'family_relations.id as family_relation_id', 'proprietors.*')
             ->withTimestamps();
     }

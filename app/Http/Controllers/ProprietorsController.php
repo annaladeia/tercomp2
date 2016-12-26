@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 
 use App\Proprietor;
 use App\FamilyRelation;
+use App\Profession;
 use Session;
 
 class ProprietorsController extends Controller
@@ -36,8 +37,9 @@ class ProprietorsController extends Controller
     {
         $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
         $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('field_display', 'id');
+        $professions = Profession::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         
-        return view('proprietors.create', compact('proprietors', 'familyRelations'));
+        return view('proprietors.create', compact('proprietors', 'familyRelations', 'professions'));
     }
 
     /**
@@ -56,7 +58,7 @@ class ProprietorsController extends Controller
         
         $proprietor = Proprietor::create($input);
         
-        $this->storeRelatedProprietors($proprietor, $input);
+        $this->storeRelations($proprietor, $input);
         
         Session::flash('flash_message', 'Propriétaire successfully added.');
     
@@ -93,6 +95,7 @@ class ProprietorsController extends Controller
         $data = Proprietor::with('relatedProprietors')->findOrFail($id);
         
         $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
+        $professions = Profession::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         
         switch ($data->sex) {
             case 1:
@@ -105,7 +108,7 @@ class ProprietorsController extends Controller
                 $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('field_display', 'id');
         }
         
-        return view('proprietors.edit', compact('data', 'proprietors', 'familyRelations'));
+        return view('proprietors.edit', compact('data', 'proprietors', 'familyRelations', 'professions'));
     }
 
     /**
@@ -127,7 +130,7 @@ class ProprietorsController extends Controller
     
         $proprietor->fill($input)->save();
         
-        $this->storeRelatedProprietors($proprietor, $input);
+        $this->storeRelations($proprietor, $input);
     
         Session::flash('flash_message', 'Propriétaire successfully modified.');
     
@@ -163,9 +166,42 @@ class ProprietorsController extends Controller
      * @param  obj $proprietor, array $input
      * @return bool
      */
-    private function storeRelatedProprietors($proprietor, $input)
+    private function storeRelations($proprietor, $input)
     {
-        $syncArray = [];
+        if (isset($input['profession']))
+            $proprietor->professions()->sync($input['profession']);
+        else
+            $proprietor->professions()->sync(array());
+            
+        $professionsSyncArray = [];
+        
+        if (array_key_exists('profession_type', $input)) {
+            foreach ($input['profession_type'] as $i => $connectionType) {
+                
+                if ($connectionType == 1) { //existing profession
+                
+                    if (array_key_exists('profession', $input) && array_key_exists($i, $input['profession'])) {
+                    
+                        $professionsSyncArray[] = $input['profession'][$i];
+                    }
+                    
+                } elseif ($connectionType == 2) { //new profession
+                
+                    if ($input['profession_name'][$i]) {
+                        
+                        $profession = new Profession;
+                        $profession->name = trim($input['profession_name'][$i]);
+                        $profession->save();
+                        
+                        $professionsSyncArray[] = $profession->id;
+                    }
+                }
+            }
+        }
+        
+        $proprietor->professions()->sync($professionsSyncArray);
+        
+        $relProprietorsSyncArray = [];
         
         if (array_key_exists('related_connection_type', $input)) {
             
@@ -177,7 +213,7 @@ class ProprietorsController extends Controller
                     
                         if (array_key_exists('related_proprietor', $input) && array_key_exists($i, $input['related_proprietor'])) {
                         
-                            $syncArray[$input['related_proprietor'][$i]] = array('family_relation_id' => $input['related_type'][$i]);
+                            $relProprietorsSyncArray[$input['related_proprietor'][$i]] = array('family_relation_id' => $input['related_type'][$i]);
                         }
                         
                     } elseif ($connectionType == 2) { //new proprietor
@@ -190,7 +226,7 @@ class ProprietorsController extends Controller
                             $relProprietor->differential = trim($input['related_proprietor_differential'][$i]);
                             $relProprietor->save();
                             
-                            $syncArray[$relProprietor->id] = array('family_relation_id' => $input['related_type'][$i]);
+                            $relProprietorsSyncArray[$relProprietor->id] = array('family_relation_id' => $input['related_type'][$i]);
                         }
                     }
                 }
@@ -198,16 +234,16 @@ class ProprietorsController extends Controller
         
         }
         
-        $proprietor->relatedProprietors()->sync($syncArray);
+        $proprietor->relatedProprietors()->sync($relProprietorsSyncArray);
         
         //get all proprietors that are currently related to this proprietor
         foreach ($proprietor->inverseRelatedProprietors()->get() as $relatedProprietor) {
             //check if proprietors are still related
-            if (array_key_exists($relatedProprietor->id, $syncArray)) {
+            if (array_key_exists($relatedProprietor->id, $relProprietorsSyncArray)) {
                 //is relation still of the same type?
-                if ($syncArray[$relatedProprietor->id]['family_relation_id'] == $relatedProprietor->family_relation_opposite_id) {
+                if ($relProprietorsSyncArray[$relatedProprietor->id]['family_relation_id'] == $relatedProprietor->family_relation_opposite_id) {
                     //remove key from syncArray 
-                    unset($syncArray[$relatedProprietor->id]);
+                    unset($relProprietorsSyncArray[$relatedProprietor->id]);
                 }
             } else {
                 //remove relation
@@ -215,8 +251,8 @@ class ProprietorsController extends Controller
             }
         }
         
-        //loop through (remainder of) $syncArray
-        foreach ($syncArray as $proprietorID => $relation) {
+        //loop through (remainder of) $relProprietorsSyncArray
+        foreach ($relProprietorsSyncArray as $proprietorID => $relation) {
             //get proprietor
             $relatedProprietor = Proprietor::find($proprietorID);
             

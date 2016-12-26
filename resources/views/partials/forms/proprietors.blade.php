@@ -131,6 +131,53 @@
     {!! Form::text('occupation', null, ['class' => 'form-control']) !!}
 </div>
 
+
+<div class="form-group df-group df-hidden">
+    {!! Form::label('profession[]', 'Métier:', ['class' => 'control-label']) !!}
+    <div class="form-inline form-group df-content hide">
+        <div class="form-group">
+            {!! Form::select('profession_type[]', [1 => 'Métier enregistre', 2 => 'Nouveau métier'], null, ['class' => 'form-toggle form-control']) !!}
+        </div>
+        <div class="form-group form-toggle-option form-toggle-option-1">
+            {!! Form::select('profession[]', $professions, null, ['class' => 'df-unique form-control']) !!}
+        </div>
+        <div class="form-group form-toggle-option form-toggle-option-2 hide">
+            {!! Form::text('profession_name[]', null, ['class' => 'form-control', 'placeholder' => 'Métier']) !!}
+        </div>
+        <button class="btn btn-danger df-delete" type="button">
+            <span class="glyphicon glyphicon-minus"></span>
+        </button>
+    </div>
+    
+    <div class="df-container">
+        @if(isset($data))
+        @foreach ($data->professions as $profession)
+        <div class="form-inline form-group df-content-item">
+            <div class="form-group">
+                {!! Form::select('profession_type[]', [1 => 'Métier enregistre', 2 => 'Nouveau métier'], null, ['class' => 'form-toggle form-control']) !!}
+            </div>
+            <div class="form-group form-toggle-option form-toggle-option-1">
+                {!! Form::select('profession[]', $professions, $profession->id, ['class' => 'df-unique form-control form-entity']) !!}
+            </div>
+            <div class="form-group form-toggle-option form-toggle-option-2 hide">
+                {!! Form::text('profession_name[]', null, ['class' => 'form-control', 'placeholder' => 'Métier']) !!}
+            </div>
+            <button class="btn btn-danger df-delete" type="button">
+                <span class="glyphicon glyphicon-minus"></span>
+            </button>
+            <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1" data-entity-type="professions">View métier</a>
+        </div>
+        @endforeach
+        @endif
+    </div>
+    
+    <div class="form-group">
+        <button class="btn btn-success df-add" type="button">
+            Add <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+</div>
+
 <div class="form-group">
     {!! Form::label('comments', 'Autre renseigment:', ['class' => 'control-label']) !!}
     {!! Form::textarea('comments', null, ['class' => 'form-control']) !!}

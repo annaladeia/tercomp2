@@ -24,6 +24,7 @@
         <li {{{ (Request::is('places') || Request::is('places/*') ? 'class=active' : '') }}}><a href="{{ route('places.index') }}">Toponymes</a></li>
         <li {{{ (Request::is('parceltypes') || Request::is('parceltypes/*') ? 'class=active' : '') }}}><a href="{{ route('parceltypes.index') }}">Natures</a></li>
         <li {{{ (Request::is('references') || Request::is('references/*') ? 'class=active' : '') }}}><a href="{{ route('references.index') }}">Confronts</a></li>
+        <li {{{ (Request::is('professions') || Request::is('professions/*') ? 'class=active' : '') }}}><a href="{{ route('professions.index') }}">Métiers</a></li>
     </div>
   </div>
 </nav>
