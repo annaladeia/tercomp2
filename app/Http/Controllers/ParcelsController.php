@@ -26,7 +26,7 @@ class ParcelsController extends Controller
      */
     public function index()
     {
-        $data = Parcel::orderBy('page_number', 'asc')->orderBy('front', 'asc')->orderBy('parcel_number', 'asc')->get();
+        $data = Parcel::with('proprietors')->orderBy('page_number', 'asc')->orderBy('front', 'asc')->orderBy('parcel_number', 'asc')->get();
 
         return view('parcels.index')->withData($data);
     }
@@ -38,7 +38,7 @@ class ParcelsController extends Controller
      */
     public function create()
     {
-        $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
+        $proprietors = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
         $places = Place::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $parceltypes = ParcelType::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $references = Reference::orderBy('name', 'asc')->get()->lists('field_display', 'id');
@@ -107,7 +107,7 @@ class ParcelsController extends Controller
      */
     public function show($id)
     {
-        $data = Parcel::findOrFail($id);
+        $data = Parcel::with('proprietors')->with('parcelConnections.reference')->with('parcelConnections.proprietor.relatedProprietors')->findOrFail($id);
         
         return view('parcels.show')->withData($data);
     }
@@ -120,8 +120,8 @@ class ParcelsController extends Controller
      */
     public function edit($id)
     {
-        $data = Parcel::findOrFail($id);
-        $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
+        $data = Parcel::with('proprietors')->findOrFail($id);
+        $proprietors = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
         $places = Place::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $parceltypes = ParcelType::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $references = Reference::orderBy('name', 'asc')->get()->lists('field_display', 'id');

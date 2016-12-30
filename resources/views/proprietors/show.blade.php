@@ -25,8 +25,8 @@
     <dd></dd>
     <dt>Lieu de residence</dt>
     <dd>{{ $data->residence }}</dd>
-    <dt>Métier / Statut</dt>
-    <dd>{{ $data->occupation }}</dd>
+    <dt>Métier(s)</dt>
+    <dd>{{ $data->professions_display }}</dd>
     <dt>Parcelles</dt>
     <dd>
     @foreach ($data->parcels as $parcel)

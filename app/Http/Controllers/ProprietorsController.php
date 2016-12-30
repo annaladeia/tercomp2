@@ -23,7 +23,7 @@ class ProprietorsController extends Controller
      */
     public function index()
     {
-        $data = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get();
+        $data = Proprietor::with('professions')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get();
 
         return view('proprietors.index')->withData($data);
     }
@@ -35,7 +35,7 @@ class ProprietorsController extends Controller
      */
     public function create()
     {
-        $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
+        $proprietors = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
         $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('field_display', 'id');
         $professions = Profession::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         
@@ -79,7 +79,7 @@ class ProprietorsController extends Controller
      */
     public function show($id)
     {
-        $data = Proprietor::findOrFail($id);
+        $data = Proprietor::with('professions')->findOrFail($id);
         
         return view('proprietors.show')->withData($data);
     }
@@ -94,7 +94,7 @@ class ProprietorsController extends Controller
     {
         $data = Proprietor::with('relatedProprietors')->findOrFail($id);
         
-        $proprietors = Proprietor::orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
+        $proprietors = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
         $professions = Profession::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         
         switch ($data->sex) {

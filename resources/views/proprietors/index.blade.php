@@ -16,6 +16,7 @@
             <th>Prenom</th>
             <th>Surnom</th>
             <th>Folio</th>
+            <th>Métier(s)</th>
             <th>Discriminateur</th>
             <th>Lieu de residence</th>
             <th class="table__buttons no-sort"></th>
@@ -29,6 +30,7 @@
             <td>{{ $data->first_name }}</td>
             <td>{{ $data->nickname }}</td>
             <td>{{ $data->page }}</td>
+            <td>{{ $data->professions_display }}</td>
             <td>{{ $data->differential }}</td>
             <td>{{ $data->residence }}</td>
             <td class="table__buttons text-right"><a href="{{ route('proprietors.show', $data->id) }}" title="View record" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>

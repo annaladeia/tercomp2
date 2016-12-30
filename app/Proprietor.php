@@ -57,6 +57,15 @@ class Proprietor extends Model
             ->withTimestamps();
     }
     
+    public function getProfessionsDisplayAttribute()
+    {
+        $professions = [];
+        foreach ($this->professions as $profession) {
+            $professions[] = $profession['name'];
+        }
+        return implode(', ', $professions);
+    }
+    
     public function getFieldDisplayAttribute()
     {
         $name = $this->name;
@@ -79,7 +88,7 @@ class Proprietor extends Model
         
         if (trim(str_replace(',', '', str_replace(' ', '', $name))) == '') {
             $i = 0;
-            foreach ($this->relatedProprietors()->get() as $relProprietor) {
+            foreach ($this->relatedProprietors as $relProprietor) {
                 if ($i > 0) $name .= ' et ';
                 switch ($relProprietor->sex) {
                     case 2:
