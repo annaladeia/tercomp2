@@ -16,14 +16,17 @@ class MigrateProfessions extends Migration
     public function up()
     {
         foreach (Proprietor::get() as $p) {
+            
             $occupation = trim($p->occupation);
+            $professionID = false;
+            
             if ($occupation) {
                 
                 foreach (Profession::where('name', $occupation)->get() as $profession) {
                     $professionID = $profession->id;
                 }
                 
-                if (! isset($professionID)) {
+                if (! $professionID) {
                     $profession = new Profession;
                     $profession->name = $occupation;
                     $profession->save();
