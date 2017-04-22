@@ -61,11 +61,12 @@
             
             <div class="form-inline form-group df-content hide">
                 <div class="form-group">
-                    {!! Form::select('proprietor[]', $proprietors, null, ['class' => 'df-unique form-control']) !!}
+                    {!! Form::select('proprietor[]', $proprietors, null, ['class' => 'df-unique form-control form-entity']) !!}
                 </div>
                 <button class="btn btn-danger df-delete" type="button">
                     <span class="glyphicon glyphicon-minus"></span>
                 </button>
+                <a href="#" class="btn btn-link form-view-entity" data-entity-type="proprietors">View propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
             </div>
             
             <div class="df-container">
@@ -73,11 +74,12 @@
                 @foreach ($data->proprietors as $proprietor)
                 <div class="form-inline form-group df-content-item">
                     <div class="form-group">
-                        {!! Form::select('proprietor[]', $proprietors, $proprietor->id, ['class' => 'df-unique form-control']) !!}
+                        {!! Form::select('proprietor[]', $proprietors, $proprietor->id, ['class' => 'df-unique form-control form-entity']) !!}
                     </div>
                     <button class="btn btn-danger df-delete" type="button">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
+                    <a href="#" class="btn btn-link form-view-entity" data-entity-type="proprietors">View propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
                 </div>
                 @endforeach
                 @endif
@@ -87,7 +89,7 @@
                 <button class="btn btn-success df-add" type="button">
                     Add <span class="glyphicon glyphicon-plus"></span>
                 </button>
-                or <a href="{{ route('proprietors.create') }}" target="_blank">Create new Propriétaire</a>
+                or <a href="{{ route('proprietors.create') }}" target="_blank">Create new Propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
             </div>
         </div>
         
@@ -105,11 +107,12 @@
             
             <div class="form-inline form-group df-content hide">
                 <div class="form-group">
-                    {!! Form::select('place[]', $places, null, ['class' => 'df-unique form-control']) !!}
+                    {!! Form::select('place[]', $places, null, ['class' => 'df-unique form-control form-entity']) !!}
                 </div>
                 <button class="btn btn-danger df-delete" type="button">
                     <span class="glyphicon glyphicon-minus"></span>
                 </button>
+                <a href="#" class="btn btn-link form-view-entity" data-entity-type="places">View toponyme <span class="glyphicon glyphicon-new-window"></span></a>
             </div>
             
             <div class="df-container">
@@ -117,11 +120,12 @@
                 @foreach ($data->places as $place)
                 <div class="form-inline form-group df-content-item">
                     <div class="form-group">
-                        {!! Form::select('place[]', $places, $place->id, ['class' => 'df-unique form-control']) !!}
+                        {!! Form::select('place[]', $places, $place->id, ['class' => 'df-unique form-control form-entity']) !!}
                     </div>
                     <button class="btn btn-danger df-delete" type="button">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
+                    <a href="#" class="btn btn-link form-view-entity" data-entity-type="places">View toponyme <span class="glyphicon glyphicon-new-window"></span></a>
                 </div>
                 @endforeach
                 @endif
@@ -131,7 +135,7 @@
                 <button class="btn btn-success df-add" type="button">
                     Add <span class="glyphicon glyphicon-plus"></span>
                 </button>
-                or <a href="{{ route('places.create') }}" target="_blank">Create new Toponyme</a>
+                or <a href="{{ route('places.create') }}" target="_blank">Create new Toponyme <span class="glyphicon glyphicon-new-window"></span></a>
             </div>
         </div>
         
@@ -149,11 +153,12 @@
             
             <div class="form-inline form-group df-content hide">
                 <div class="form-group">
-                    {!! Form::select('parceltype[]', $parceltypes, null, ['class' => 'df-unique form-control']) !!}
+                    {!! Form::select('parceltype[]', $parceltypes, null, ['class' => 'df-unique form-control form-entity']) !!}
                 </div>
                 <button class="btn btn-danger df-delete" type="button">
                     <span class="glyphicon glyphicon-minus"></span>
                 </button>
+                <a href="#" class="btn btn-link form-view-entity" data-entity-type="parceltypes">View nature <span class="glyphicon glyphicon-new-window"></span></a>
             </div>
             
             <div class="df-container">
@@ -161,11 +166,12 @@
                 @foreach ($data->parceltypes as $parceltype)
                 <div class="form-inline form-group df-content-item">
                     <div class="form-group">
-                        {!! Form::select('parceltype[]', $parceltypes, $parceltype->id, ['class' => 'df-unique form-control']) !!}
+                        {!! Form::select('parceltype[]', $parceltypes, $parceltype->id, ['class' => 'df-unique form-control form-entity']) !!}
                     </div>
                     <button class="btn btn-danger df-delete" type="button">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
+                    <a href="#" class="btn btn-link form-view-entity" data-entity-type="parceltypes">View nature <span class="glyphicon glyphicon-new-window"></span></a>
                 </div>
                 @endforeach
                 @endif
@@ -175,7 +181,7 @@
                 <button class="btn btn-success df-add" type="button">
                     Add <span class="glyphicon glyphicon-plus"></span>
                 </button>
-                or <a href="{{ route('parceltypes.create') }}" target="_blank">Create new Nature</a>
+                or <a href="{{ route('parceltypes.create') }}" target="_blank">Create new Nature <span class="glyphicon glyphicon-new-window"></span></a>
             </div>
         </div>
         
@@ -200,10 +206,10 @@
                     {!! Form::select('connection_type[]', [1 => 'Propriétaire voisin', 2 => 'Confront invariant'], null, ['class' => 'form-toggle form-control']) !!}
                 </div>
                 <div class="form-group form-toggle-option form-toggle-option-1">
-                    {!! Form::select('connection_proprietor[]', $proprietors, null, ['class' => 'form-control']) !!}
+                    {!! Form::select('connection_proprietor[]', $proprietors, null, ['class' => 'form-control form-entity']) !!}
                 </div>
                 <div class="form-group form-toggle-option form-toggle-option-2 hide">
-                    {!! Form::select('connection_reference[]', $references, null, ['class' => 'form-control']) !!}
+                    {!! Form::select('connection_reference[]', $references, null, ['class' => 'form-control form-entity']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::text('connection_comments[]', null, ['placeholder' => 'Information complémentaire', 'class' => 'form-control']) !!}
@@ -211,6 +217,8 @@
                 <button class="btn btn-danger df-delete" type="button">
                     <span class="glyphicon glyphicon-minus"></span>
                 </button>
+                <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1" data-entity-type="proprietors">View propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
+                <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-2 hide" data-entity-type="references">View confront <span class="glyphicon glyphicon-new-window"></span></a>
             </div>
             
             <div class="df-container">
@@ -226,10 +234,10 @@
                         {!! Form::select('connection_type[]', [1 => 'Propriétaire voisin', 2 => 'Confront invariant'], $connection->proprietor_id ? 1 : 2, ['class' => 'form-toggle form-control']) !!}
                     </div>
                     <div class="form-group form-toggle-option form-toggle-option-1 @if ($connection->reference_id) hide @endif">
-                        {!! Form::select('connection_proprietor[]', $proprietors, $connection->proprietor_id, ['class' => 'form-control']) !!}
+                        {!! Form::select('connection_proprietor[]', $proprietors, $connection->proprietor_id, ['class' => 'form-control form-entity']) !!}
                     </div>
                     <div class="form-group form-toggle-option form-toggle-option-2 @if ($connection->proprietor_id) hide @endif">
-                        {!! Form::select('connection_reference[]', $references, $connection->reference_id, ['class' => 'form-control']) !!}
+                        {!! Form::select('connection_reference[]', $references, $connection->reference_id, ['class' => 'form-control form-entity']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::text('connection_comments[]', $connection->comments, ['placeholder' => 'Information complémentaire', 'class' => 'form-control']) !!}
@@ -237,6 +245,8 @@
                     <button class="btn btn-danger df-delete" type="button">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
+                    <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1 @if ($connection->reference_id) hide @endif" data-entity-type="proprietors">View propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
+                    <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-2 @if ($connection->proprietor_id) hide @endif" data-entity-type="references">View confront <span class="glyphicon glyphicon-new-window"></span></a>
                 </div>
                 @endforeach
                 @endif
@@ -246,7 +256,7 @@
                 <button class="btn btn-success df-add" type="button">
                     Add <span class="glyphicon glyphicon-plus"></span>
                 </button>
-                or <a href="{{ route('references.create') }}" target="_blank">Create new Confront invariant</a>
+                or <a href="{{ route('references.create') }}" target="_blank">Create new Confront invariant <span class="glyphicon glyphicon-new-window"></span></a>
             </div>
         </div>
         

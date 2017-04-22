@@ -40,7 +40,7 @@ var forms = {
     handleViewEntity: function($el) {
         $el.find(".form-view-entity").click(function(e) {
             e.preventDefault();
-            window.open('/' + $(this).data('entity-type') + '/' + $(this).parents(".df-content-item").find(".form-entity").val());
+            window.open('/' + $(this).data('entity-type') + '/' + $(this).parents(".df-content-item").find(".form-group:not(.hide) > .form-entity").val());
         });
     },
     
