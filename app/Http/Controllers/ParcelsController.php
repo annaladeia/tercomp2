@@ -54,6 +54,7 @@ class ParcelsController extends Controller
         $data = new Parcel;
         $data->proprietors = $preselectedProprietors;
         $data->page_number = Session::get('page_number');
+        $data->front = Session::get('front');
         $data->parcel_number = Session::get('parcel_number');
         
         return view('parcels.create', compact('data', 'proprietors', 'places', 'parceltypes', 'references'));
@@ -87,11 +88,15 @@ class ParcelsController extends Controller
             case 'copy_proprietor_page':
                 Session::flash('proprietor', $input['proprietor']);
                 Session::flash('page_number', $input['page_number']);
+                Session::flash('front', $input['front']);
+                Session::flash('parcel_number', $input['parcel_number']+1);
                 return redirect()->route('parcels.create');
                 break;
             case 'copy_proprietor_page_plus1':
                 Session::flash('proprietor', $input['proprietor']);
-                Session::flash('page_number', $input['page_number']+1);
+                Session::flash('page_number', $input['front'] == 1 ? $input['page_number'] : $input['page_number']+1);
+                Session::flash('front', $input['front'] == 1 ? 0 : 1);
+                Session::flash('parcel_number', 1);
                 return redirect()->route('parcels.create');
                 break;
             case 'new':
@@ -161,12 +166,14 @@ class ParcelsController extends Controller
             case 'copy_proprietor_page':
                 Session::flash('proprietor', $input['proprietor']);
                 Session::flash('page_number', $input['page_number']);
+                Session::flash('front', $input['front']);
                 Session::flash('parcel_number', $input['parcel_number']+1);
                 return redirect()->route('parcels.create');
                 break;
             case 'copy_proprietor_page_plus1':
                 Session::flash('proprietor', $input['proprietor']);
-                Session::flash('page_number', $input['page_number']+1);
+                Session::flash('page_number', $input['front'] == 1 ? $input['page_number'] : $input['page_number']+1);
+                Session::flash('front', $input['front'] == 1 ? 0 : 1);
                 Session::flash('parcel_number', 1);
                 return redirect()->route('parcels.create');
                 break;
