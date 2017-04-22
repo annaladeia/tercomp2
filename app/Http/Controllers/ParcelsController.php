@@ -39,6 +39,7 @@ class ParcelsController extends Controller
     public function create()
     {
         $proprietors = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
+        $proprietorsExtended = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_extended_display', 'id');
         $places = Place::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $parceltypes = ParcelType::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $references = Reference::orderBy('name', 'asc')->get()->lists('field_display', 'id');
@@ -57,7 +58,7 @@ class ParcelsController extends Controller
         $data->front = Session::get('front');
         $data->parcel_number = Session::get('parcel_number');
         
-        return view('parcels.create', compact('data', 'proprietors', 'places', 'parceltypes', 'references'));
+        return view('parcels.create', compact('data', 'proprietors', 'proprietorsExtended', 'places', 'parceltypes', 'references'));
     }
 
     /**
@@ -128,11 +129,12 @@ class ParcelsController extends Controller
     {
         $data = Parcel::with('proprietors')->findOrFail($id);
         $proprietors = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
+        $proprietorsExtended = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_extended_display', 'id');
         $places = Place::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $parceltypes = ParcelType::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         $references = Reference::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         
-        return view('parcels.edit', compact('data', 'proprietors', 'places', 'parceltypes', 'references'));
+        return view('parcels.edit', compact('data', 'proprietors', 'proprietorsExtended', 'places', 'parceltypes', 'references'));
     }
 
     /**

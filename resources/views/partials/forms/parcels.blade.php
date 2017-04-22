@@ -206,7 +206,7 @@
                     {!! Form::select('connection_type[]', [1 => 'Propriétaire voisin', 2 => 'Confront invariant'], null, ['class' => 'form-toggle form-control']) !!}
                 </div>
                 <div class="form-group form-toggle-option form-toggle-option-1">
-                    {!! Form::select('connection_proprietor[]', $proprietors, null, ['class' => 'form-control form-entity']) !!}
+                    {!! Form::select('connection_proprietor[]', $proprietorsExtended, null, ['class' => 'form-control form-entity']) !!}
                 </div>
                 <div class="form-group form-toggle-option form-toggle-option-2 hide">
                     {!! Form::select('connection_reference[]', $references, null, ['class' => 'form-control form-entity']) !!}
@@ -234,7 +234,7 @@
                         {!! Form::select('connection_type[]', [1 => 'Propriétaire voisin', 2 => 'Confront invariant'], $connection->proprietor_id ? 1 : 2, ['class' => 'form-toggle form-control']) !!}
                     </div>
                     <div class="form-group form-toggle-option form-toggle-option-1 @if ($connection->reference_id) hide @endif">
-                        {!! Form::select('connection_proprietor[]', $proprietors, $connection->proprietor_id, ['class' => 'form-control form-entity']) !!}
+                        {!! Form::select('connection_proprietor[]', $proprietorsExtended, $connection->proprietor_id, ['class' => 'form-control form-entity']) !!}
                     </div>
                     <div class="form-group form-toggle-option form-toggle-option-2 @if ($connection->proprietor_id) hide @endif">
                         {!! Form::select('connection_reference[]', $references, $connection->reference_id, ['class' => 'form-control form-entity']) !!}

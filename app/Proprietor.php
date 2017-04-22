@@ -105,4 +105,47 @@ class Proprietor extends Model
         
         return $name;
     }
+    
+    public function getFieldExtendedDisplayAttribute()
+    {
+        $name = $this->name;
+        
+        if ($this->first_name) {
+            $name .= ", " . $this->first_name;
+        }
+        
+        if ($this->nickname) {
+            $name .= " " . $this->nickname;
+        }
+        
+        if ($this->occupation) {
+            $name .= " (" . $this->occupation . ")";
+        }
+        
+        if ($this->differential) {
+            $name .= " " . $this->differential;
+        }
+        
+        $i = 0;
+        foreach ($this->relatedProprietors as $relProprietor) {
+            
+            if ($i > 0)
+                $name .= ' et ';
+            elseif (trim($name) != '')
+                $name .= " - ";
+                
+            switch ($relProprietor->sex) {
+                case 2:
+                    $familyRelation = mb_convert_case($relProprietor->name_fem, MB_CASE_TITLE);
+                    break;
+                default:
+                    $familyRelation =  mb_convert_case($relProprietor->name_masc, MB_CASE_TITLE);
+                    break;
+            }
+            $name .= str_replace('(S)', '(s)', $familyRelation) . ' de ' . $relProprietor->field_display;
+            $i ++;
+        }
+        
+        return $name;
+    }
 }
