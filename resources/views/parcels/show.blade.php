@@ -47,14 +47,16 @@
     <br/>
     @endforeach
     </dd>
-    <dt>Canne</dt>
-    <dd>{{$data->canne}} @if ($data->canne != $data->canne_input) ou {{$data->canne_input}} @endif</dd>
-    <dt>Coup</dt>
-    <dd>{{$data->coup}} @if ($data->coup != $data->coup_input) ou {{$data->coup_input}} @endif</dd>
-    <dt>Pugnerade</dt>
-    <dd>{{$data->pugnerade}} @if ($data->pugnerade != $data->pugnerade_input) ou {{$data->pugnerade_input}} @endif</dd>
+    <dt>Arpent</dt>
+    <dd>{{$data->arpent}} @if ($data->arpent != $data->arpent_input) ou {{$data->arpent_input}} @endif</dd>
     <dt>Seteree</dt>
     <dd>{{$data->seteree}} @if ($data->seteree != $data->seteree_input) ou {{$data->seteree_input}} @endif</dd>
+    <dt>Pugnerade</dt>
+    <dd>{{$data->pugnerade}} @if ($data->pugnerade != $data->pugnerade_input) ou {{$data->pugnerade_input}} @endif</dd>
+    <dt>Coup</dt>
+    <dd>{{$data->coup}} @if ($data->coup != $data->coup_input) ou {{$data->coup_input}} @endif</dd>
+    <dt>Canne</dt>
+    <dd>{{$data->canne}} @if ($data->canne != $data->canne_input) ou {{$data->canne_input}} @endif</dd>
     <dt>Denier(s)</dt>
     <dd>{{$data->denier}} @if ($data->denier != $data->denier_input) ou {{$data->denier_input}} @endif</dd>
     <dt>Sous</dt>

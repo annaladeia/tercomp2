@@ -267,7 +267,7 @@ class ParcelsController extends Controller
     }
     
     private function calcValues($parcel, $input) {
-        $fields = ['canne', 'coup', 'pugnerade', 'seteree', 'denier', 'sous', 'livre'];
+        $fields = ['canne', 'coup', 'pugnerade', 'arpent', 'seteree', 'denier', 'sous', 'livre'];
         
         foreach ($fields as $field) {
             $value = null;

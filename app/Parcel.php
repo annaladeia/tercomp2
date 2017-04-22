@@ -17,6 +17,7 @@ class Parcel extends Model
         'page_number',
         'front',
         'parcel_number',
+        'arpent_input',
         'canne_input',
         'coup_input',
         'pugnerade_input',
