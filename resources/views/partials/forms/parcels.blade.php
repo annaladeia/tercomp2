@@ -261,16 +261,9 @@
     <div class="panel-body form-horizontal">
 
         <div class="form-group">
-            {!! Form::label('canne_input', 'Canne:', ['class' => 'col-sm-2 control-label']) !!}
+            {!! Form::label('seteree_input', 'Seteree:', ['class' => 'col-sm-2 control-label']) !!}
             <div class="col-sm-10">
-                {!! Form::text('canne_input', null, ['class' => 'form-control']) !!}
-            </div>
-        </div>
-
-        <div class="form-group">
-            {!! Form::label('coup_input', 'Coup:', ['class' => 'col-sm-2 control-label']) !!}
-            <div class="col-sm-10">
-                {!! Form::text('coup_input', null, ['class' => 'form-control']) !!}
+                {!! Form::text('seteree_input', null, ['class' => 'form-control']) !!}
             </div>
         </div>
 
@@ -282,9 +275,16 @@
         </div>
 
         <div class="form-group">
-            {!! Form::label('seteree_input', 'Seteree:', ['class' => 'col-sm-2 control-label']) !!}
+            {!! Form::label('coup_input', 'Coup:', ['class' => 'col-sm-2 control-label']) !!}
             <div class="col-sm-10">
-                {!! Form::text('seteree_input', null, ['class' => 'form-control']) !!}
+                {!! Form::text('coup_input', null, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('canne_input', 'Canne:', ['class' => 'col-sm-2 control-label']) !!}
+            <div class="col-sm-10">
+                {!! Form::text('canne_input', null, ['class' => 'form-control']) !!}
             </div>
         </div>
 
