@@ -82,7 +82,7 @@
         <button class="btn btn-danger df-delete" type="button">
             <span class="glyphicon glyphicon-minus"></span>
         </button>
-        <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1" data-entity-type="proprietors">View propriétaire</a>
+        <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1" data-entity-type="proprietors">View propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
     </div>
     
     <div class="df-container">
@@ -107,7 +107,7 @@
             <button class="btn btn-danger df-delete" type="button">
                 <span class="glyphicon glyphicon-minus"></span>
             </button>
-            <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1" data-entity-type="proprietors">View propriétaire</a>
+            <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1" data-entity-type="proprietors">View propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
         </div>
         @endforeach
         @endif
@@ -159,7 +159,7 @@
             <button class="btn btn-danger df-delete" type="button">
                 <span class="glyphicon glyphicon-minus"></span>
             </button>
-            <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1" data-entity-type="professions">View métier</a>
+            <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1" data-entity-type="professions">View métier <span class="glyphicon glyphicon-new-window"></span></a>
         </div>
         @endforeach
         @endif

@@ -54,6 +54,7 @@ class ParcelsController extends Controller
         $data = new Parcel;
         $data->proprietors = $preselectedProprietors;
         $data->page_number = Session::get('page_number');
+        $data->parcel_number = Session::get('parcel_number');
         
         return view('parcels.create', compact('data', 'proprietors', 'places', 'parceltypes', 'references'));
     }
@@ -160,11 +161,13 @@ class ParcelsController extends Controller
             case 'copy_proprietor_page':
                 Session::flash('proprietor', $input['proprietor']);
                 Session::flash('page_number', $input['page_number']);
+                Session::flash('parcel_number', $input['parcel_number']+1);
                 return redirect()->route('parcels.create');
                 break;
             case 'copy_proprietor_page_plus1':
                 Session::flash('proprietor', $input['proprietor']);
                 Session::flash('page_number', $input['page_number']+1);
+                Session::flash('parcel_number', 1);
                 return redirect()->route('parcels.create');
                 break;
             case 'new':
