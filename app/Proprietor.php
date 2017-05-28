@@ -78,12 +78,8 @@ class Proprietor extends Model
             $name .= " " . $this->nickname;
         }
         
-        if ($this->occupation) {
-            $name .= " (" . $this->occupation . ")";
-        }
-        
-        if ($this->differential) {
-            $name .= " " . $this->differential;
+        if ($this->institution) {
+            $name .= " " . $this->institution;
         }
         
         if (trim(str_replace(',', '', str_replace(' ', '', $name))) == '') {
@@ -103,7 +99,15 @@ class Proprietor extends Model
             }
         }
         
-        return $name;
+        if ($this->occupation) {
+            $name .= " (" . $this->occupation . ")";
+        }
+        
+        if ($this->differential) {
+            $name .= " " . $this->differential;
+        }
+        
+        return trim($name);
     }
     
     public function getFieldExtendedDisplayAttribute()
@@ -116,6 +120,10 @@ class Proprietor extends Model
         
         if ($this->nickname) {
             $name .= " " . $this->nickname;
+        }
+        
+        if ($this->institution) {
+            $name .= " " . $this->institution;
         }
         
         if ($this->occupation) {
@@ -146,6 +154,6 @@ class Proprietor extends Model
             $i ++;
         }
         
-        return $name;
+        return trim($name);
     }
 }
