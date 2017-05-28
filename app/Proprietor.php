@@ -37,7 +37,7 @@ class Proprietor extends Model
     
     public function parcelConnections()
     {
-        return $this->hasMany('App\ParcelConnection')
+        return $this->belongsToMany('App\ParcelConnection')
                     ->withTimestamps();
     }
     

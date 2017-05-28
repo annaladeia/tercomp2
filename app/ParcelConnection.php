@@ -24,9 +24,14 @@ class ParcelConnection extends Model
         return $this->belongsTo('App\Parcel');
     }
     
-    public function proprietor()
+    public function proprietors()
     {
-        return $this->belongsTo('App\Proprietor');
+        return $this->belongsToMany('App\Proprietor');
+    }
+    
+    public function getProprietorIDsAttribute()
+    {
+        return $this->proprietors->pluck('id')->toArray();
     }
     
     public function reference()

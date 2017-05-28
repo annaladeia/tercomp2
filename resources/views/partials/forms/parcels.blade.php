@@ -197,22 +197,22 @@
 
         <div class="form-group df-group df-hidden">
             
-            <div class="form-inline form-group df-content hide">
+            <div class="form-inline form-group df-content hide" data-index-start="{{count($data->parcelConnections)}}">
                 <div class="form-group">
-                    {!! Form::select('connection_orientation[]', [1 => 'Septentrion', 2 => 'Levant', 3 => 'Midi', 4 => 'Couchant'], null, ['class' => 'form-control']) !!}
+                    {!! Form::select('connection_orientation[i]', [1 => 'Septentrion', 2 => 'Levant', 3 => 'Midi', 4 => 'Couchant'], null, ['class' => 'form-control']) !!}
                 </div>
                 avec
                 <div class="form-group">
-                    {!! Form::select('connection_type[]', [1 => 'Propriétaire voisin', 2 => 'Confront invariant'], null, ['class' => 'form-toggle form-control']) !!}
+                    {!! Form::select('connection_type[i]', [1 => 'Propriétaire voisin', 2 => 'Confront invariant'], null, ['class' => 'form-toggle form-control']) !!}
                 </div>
                 <div class="form-group form-toggle-option form-toggle-option-1">
-                    {!! Form::select('connection_proprietor[]', $proprietorsExtended, null, ['class' => 'form-control form-entity']) !!}
+                    {!! Form::select('connection_proprietors[i][]', $proprietorsExtended, null, ['class' => 'form-control form-entity', 'multiple']) !!}
                 </div>
                 <div class="form-group form-toggle-option form-toggle-option-2 hide">
-                    {!! Form::select('connection_reference[]', $references, null, ['class' => 'form-control form-entity']) !!}
+                    {!! Form::select('connection_reference[i]', $references, null, ['class' => 'form-control form-entity']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::text('connection_comments[]', null, ['placeholder' => 'Information complémentaire', 'class' => 'form-control']) !!}
+                    {!! Form::text('connection_comments[i]', null, ['placeholder' => 'Information complémentaire', 'class' => 'form-control']) !!}
                 </div>
                 <button class="btn btn-danger df-delete" type="button">
                     <span class="glyphicon glyphicon-minus"></span>
@@ -223,7 +223,7 @@
             
             <div class="df-container">
                 @if(isset($data))
-                @foreach ($data->parcelConnections as $connection)
+                @foreach ($data->parcelConnections as $i => $connection)
                 <div class="form-inline form-group df-content-item">
                     {!! Form::hidden('connection_id[]', $connection->id) !!}
                     <div class="form-group">
@@ -231,12 +231,13 @@
                     </div>
                     avec
                     <div class="form-group">
-                        {!! Form::select('connection_type[]', [1 => 'Propriétaire voisin', 2 => 'Confront invariant'], $connection->proprietor_id ? 1 : 2, ['class' => 'form-toggle form-control']) !!}
+                        {!! Form::select('connection_type[]', [1 => 'Propriétaire voisin', 2 => 'Confront invariant'], $connection->proprietorIDs ? 1 : 2, ['class' => 'form-toggle form-control']) !!}
                     </div>
                     <div class="form-group form-toggle-option form-toggle-option-1 @if ($connection->reference_id) hide @endif">
-                        {!! Form::select('connection_proprietor[]', $proprietorsExtended, $connection->proprietor_id, ['class' => 'form-control form-entity']) !!}
+                        {{$connection->reference_id}}
+                        {!! Form::select('connection_proprietors['.$i.'][]', $proprietorsExtended, $connection->proprietorIDs, ['class' => 'form-control form-entity', 'multiple' => 'multiple']) !!}
                     </div>
-                    <div class="form-group form-toggle-option form-toggle-option-2 @if ($connection->proprietor_id) hide @endif">
+                    <div class="form-group form-toggle-option form-toggle-option-2 @if ($connection->proprietorIDs) hide @endif">
                         {!! Form::select('connection_reference[]', $references, $connection->reference_id, ['class' => 'form-control form-entity']) !!}
                     </div>
                     <div class="form-group">
@@ -246,7 +247,7 @@
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
                     <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-1 @if ($connection->reference_id) hide @endif" data-entity-type="proprietors">View propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
-                    <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-2 @if ($connection->proprietor_id) hide @endif" data-entity-type="references">View confront <span class="glyphicon glyphicon-new-window"></span></a>
+                    <a href="#" class="btn btn-link form-view-entity form-toggle-option form-toggle-option-2 @if ($connection->proprietorIDs) hide @endif" data-entity-type="references">View confront <span class="glyphicon glyphicon-new-window"></span></a>
                 </div>
                 @endforeach
                 @endif

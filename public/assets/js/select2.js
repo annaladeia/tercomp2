@@ -3,16 +3,24 @@ var select2 = {
     init: function($el) {
         var self = this;
         
-        $el.select2({
-            theme: "bootstrap",
-            selectOnClose: true
-        });
+        $el.select2();
         
         $el.each(function() {
             var $this = $(this);
-            $this.data('select2').on("focus", function (e) {
-                self.focusSelect($this);
-            });            
+            if (! $this.attr('multiple')) {
+                $this.select2({
+                    theme: "bootstrap",
+                    selectOnClose: true,
+                    width: "100%"
+                }).data('select2').on("focus", function (e) {
+                    self.focusSelect($this);
+                });
+            } else {
+                $this.select2({
+                    theme: "bootstrap",
+                    width: "100%"
+                });
+            }
         }); 
     },
     

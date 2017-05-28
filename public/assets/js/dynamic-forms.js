@@ -16,11 +16,21 @@ function dfGroup($el) {
     self.btnDel = $el.find(".df-delete");
     self.content = $el.find(".df-content");
     self.container = $el.find(".df-container");
+    self.indexValue = self.content.attr('data-index-start');
     
     //add a dynamic form section
     self.add = function(silent, noDelete) {
         //clone content
         var clonedContent = self.content.clone();
+        
+        //replace array with index number
+        if (self.indexValue) {
+            var clonedContentHTML = clonedContent.html().replace(/\[i\]/g, '[' + self.indexValue + ']');
+            
+            clonedContent.html(clonedContentHTML);
+            
+            self.indexValue++;
+        }
         
         //clone content and append to container
         clonedContent.appendTo(self.container);

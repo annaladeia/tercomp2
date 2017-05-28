@@ -84,7 +84,7 @@ class ParcelsController extends Controller
         
         switch ($input['redirect']) {
             case 'edit':
-                return redirect()->route('parcels.edit', $id);
+                return redirect()->route('parcels.edit', $parcel->id);
                 break;
             case 'new_proprietor_page':
                 Session::flash('page_number', $input['page_number']);
@@ -216,6 +216,9 @@ class ParcelsController extends Controller
     
     private function storeRelations($parcel, $input)
     {
+        // echo '<pre>';
+        // print_r($input);
+        // die();
         if (isset($input['proprietor']))
             $parcel->proprietors()->sync($input['proprietor']);
         else
@@ -247,30 +250,43 @@ class ParcelsController extends Controller
                     if (($i = array_search($id, $connectionIds)) !== false) {
                         unset($connectionIds[$i]);
                     }
-                }
-                else
+                } else {
                     $connection = new ParcelConnection;
+                }
                 
                 $connection->orientation = $orientation;
                 $connection->comments = $input['connection_comments'][$key];
                 
+                $parcel->parcelConnections()->save($connection);
+                
+                $error = false;
+                
                 //connection with proprietor
                 if ($input['connection_type'][$key] == 1) {
-                    $connection->proprietor()->associate(Proprietor::findOrFail($input['connection_proprietor'][$key]));
-                    $connection->reference()->dissociate();
+                    if (isset($input['connection_proprietors'])) {
+                        $connection->proprietors()->sync($input['connection_proprietors'][$key]);
+                        $connection->reference()->dissociate();
+                    } else {
+                        $error = true;
+                    }
                 } else {
                     $connection->reference()->associate(Reference::findOrFail($input['connection_reference'][$key]));
-                    $connection->proprietor()->dissociate();
+                    $connection->proprietors()->sync(array());
                 }
                 
-                $parcel->parcelConnections()->save($connection);
+                if ($error) {
+                    $connection->delete();
+                } else {
+                    $connection->save();
+                }
                     
             }
             
-            if ($connections)
+            if ($connections) {
                 foreach ($connectionIds as $connectionId) {
                     ParcelConnection::findOrFail($connectionId)->delete();
                 }
+            }
             
         } elseif ($connections) {
             foreach ($connections as $connection) {
