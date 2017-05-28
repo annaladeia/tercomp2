@@ -86,6 +86,12 @@ class ParcelsController extends Controller
             case 'edit':
                 return redirect()->route('parcels.edit', $id);
                 break;
+            case 'new_proprietor_page':
+                Session::flash('page_number', $input['page_number']);
+                Session::flash('front', $input['front']);
+                Session::flash('parcel_number', $input['parcel_number']+1);
+                return redirect()->route('parcels.create');
+                break;
             case 'copy_proprietor_page':
                 Session::flash('proprietor', $input['proprietor']);
                 Session::flash('page_number', $input['page_number']);
@@ -164,6 +170,12 @@ class ParcelsController extends Controller
         switch ($input['redirect']) {
             case 'edit':
                 return redirect()->route('parcels.edit', $id);
+                break;
+            case 'new_proprietor_page':
+                Session::flash('page_number', $input['page_number']);
+                Session::flash('front', $input['front']);
+                Session::flash('parcel_number', $input['parcel_number']+1);
+                return redirect()->route('parcels.create');
                 break;
             case 'copy_proprietor_page':
                 Session::flash('proprietor', $input['proprietor']);
