@@ -40,10 +40,13 @@
     @elseif ($connection->orientation === 4) Couchant
     @endif
     avec 
-    @if ($connection->proprietor_id) propriétaire voisin <a href="{{ route('proprietors.show', $connection->proprietor->id) }}">{{$connection->proprietor->field_display}}</a>
+    @if (count($connection->proprietors) > 0) propriétaire voisin 
+    @foreach ($connection->proprietors as $p)
+    <a href="{{ route('proprietors.show', $p->id) }}">{{$p->field_display}}</a>
+    @endforeach
     @else confront invariant <a href="{{ route('references.show', $connection->reference->id) }}">{{$connection->reference->field_display}}</a>
     @endif
-    @if (isset($connection->comments)) ({{$connection->comments}}) @endif
+    @if (trim($connection->comments)) ({{$connection->comments}}) @endif
     <br/>
     @endforeach
     </dd>

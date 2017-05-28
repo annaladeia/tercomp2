@@ -120,7 +120,7 @@ class ParcelsController extends Controller
      */
     public function show($id)
     {
-        $data = Parcel::with('proprietors')->with('parcelConnections.reference')->with('parcelConnections.proprietor.relatedProprietors')->findOrFail($id);
+        $data = Parcel::with('proprietors')->with('parcelConnections.reference')->with('parcelConnections.proprietors.relatedProprietors')->findOrFail($id);
         
         return view('parcels.show')->withData($data);
     }
