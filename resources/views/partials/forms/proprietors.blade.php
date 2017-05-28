@@ -76,7 +76,7 @@
         </div>
         <div class="form-group form-toggle-option form-toggle-option-2 hide">
             {!! Form::text('related_proprietor_name[]', null, ['class' => 'form-control', 'placeholder' => 'Nom']) !!}
-            {!! Form::text('related_proprietor_first_name[]', null, ['class' => 'form-control', 'placeholder' => 'Surnom']) !!}
+            {!! Form::text('related_proprietor_first_name[]', null, ['class' => 'form-control', 'placeholder' => 'Prenom']) !!}
             {!! Form::text('related_proprietor_differential[]', null, ['class' => 'form-control', 'placeholder' => 'Discriminateur']) !!}
         </div>
         <button class="btn btn-danger df-delete" type="button">
