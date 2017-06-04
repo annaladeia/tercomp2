@@ -92,6 +92,12 @@ class ParcelsController extends Controller
                 Session::flash('parcel_number', $input['parcel_number']+1);
                 return redirect()->route('parcels.create');
                 break;
+            case 'new_proprietor_page_plus1':
+                Session::flash('page_number', $input['front'] == 1 ? $input['page_number'] : $input['page_number']+1);
+                Session::flash('front', $input['front'] == 1 ? 0 : 1);
+                Session::flash('parcel_number', 1);
+                return redirect()->route('parcels.create');
+                break;
             case 'copy_proprietor_page':
                 Session::flash('proprietor', $input['proprietor']);
                 Session::flash('page_number', $input['page_number']);
@@ -175,6 +181,12 @@ class ParcelsController extends Controller
                 Session::flash('page_number', $input['page_number']);
                 Session::flash('front', $input['front']);
                 Session::flash('parcel_number', $input['parcel_number']+1);
+                return redirect()->route('parcels.create');
+                break;
+            case 'new_proprietor_page_plus1':
+                Session::flash('page_number', $input['front'] == 1 ? $input['page_number'] : $input['page_number']+1);
+                Session::flash('front', $input['front'] == 1 ? 0 : 1);
+                Session::flash('parcel_number', 1);
                 return redirect()->route('parcels.create');
                 break;
             case 'copy_proprietor_page':
