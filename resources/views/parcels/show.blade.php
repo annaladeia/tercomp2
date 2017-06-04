@@ -60,12 +60,12 @@
     <dd>{{$data->coup}} @if ($data->coup != $data->coup_input) ou {{$data->coup_input}} @endif</dd>
     <dt>Canne</dt>
     <dd>{{$data->canne}} @if ($data->canne != $data->canne_input) ou {{$data->canne_input}} @endif</dd>
-    <dt>Denier(s)</dt>
-    <dd>{{$data->denier}} @if ($data->denier != $data->denier_input) ou {{$data->denier_input}} @endif</dd>
-    <dt>Sous</dt>
-    <dd>{{$data->sous}} @if ($data->sous != $data->sous_input) ou {{$data->sous_input}} @endif</dd>
     <dt>Livre</dt>
     <dd>{{$data->livre}} @if ($data->livre != $data->livre_input) ou {{$data->livre_input}} @endif</dd>
+    <dt>Sous</dt>
+    <dd>{{$data->sous}} @if ($data->sous != $data->sous_input) ou {{$data->sous_input}} @endif</dd>
+    <dt>Denier(s)</dt>
+    <dd>{{$data->denier}} @if ($data->denier != $data->denier_input) ou {{$data->denier_input}} @endif</dd>
     <dt>Autre renseigment</dt>
     <dd>{!! nl2br(e($data->comments)) !!}</dd>
 </dl>

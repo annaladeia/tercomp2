@@ -317,9 +317,9 @@
     <div class="panel-body form-horizontal">
 
         <div class="form-group">
-            {!! Form::label('denier_input', 'Denier(s):', ['class' => 'col-sm-2 control-label']) !!}
+            {!! Form::label('livre_input', 'Livre(s):', ['class' => 'col-sm-2 control-label']) !!}
             <div class="col-sm-10">
-                {!! Form::text('denier_input', null, ['class' => 'form-control']) !!}
+                {!! Form::text('livre_input', null, ['class' => 'form-control']) !!}
             </div>
         </div>
 
@@ -331,9 +331,9 @@
         </div>
 
         <div class="form-group">
-            {!! Form::label('livre_input', 'Livre(s):', ['class' => 'col-sm-2 control-label']) !!}
+            {!! Form::label('denier_input', 'Denier(s):', ['class' => 'col-sm-2 control-label']) !!}
             <div class="col-sm-10">
-                {!! Form::text('livre_input', null, ['class' => 'form-control']) !!}
+                {!! Form::text('denier_input', null, ['class' => 'form-control']) !!}
             </div>
         </div>
 
