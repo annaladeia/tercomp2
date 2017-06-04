@@ -39,7 +39,10 @@ class ProprietorsController extends Controller
         $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('field_display', 'id');
         $professions = Profession::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         
-        return view('proprietors.create', compact('proprietors', 'familyRelations', 'professions'));
+        $data = new Proprietor;
+        $data->page = Session::get('page');
+        
+        return view('proprietors.create', compact('data', 'proprietors', 'familyRelations', 'professions'));
     }
 
     /**
@@ -61,14 +64,23 @@ class ProprietorsController extends Controller
         $this->storeRelations($proprietor, $input);
         
         Session::flash('flash_message', 'Propriétaire successfully added.');
-    
-        if ($input['redirect'] == 'edit')
             
-            return redirect()->route('proprietors.edit', $proprietor);
-    
-        elseif ($input['redirect'] == 'new')
-            
-            return redirect()->route('proprietors.create');
+        switch ($input['redirect']) {
+            case 'edit':
+                return redirect()->route('proprietors.edit', $proprietor);
+                break;
+            case 'new':
+                return redirect()->route('proprietors.create');
+                break;
+            case 'new_page':
+                Session::flash('page', $input['page']);
+                return redirect()->route('proprietors.create');
+                break;
+            case 'new_page_plus1':
+                Session::flash('page', $input['page'] + 1);
+                return redirect()->route('proprietors.create');
+                break;
+        }
     }
 
     /**
@@ -133,14 +145,22 @@ class ProprietorsController extends Controller
         $this->storeRelations($proprietor, $input);
     
         Session::flash('flash_message', 'Propriétaire successfully modified.');
-    
-        if ($input['redirect'] == 'edit')
-            
-            return redirect()->route('proprietors.edit', $id);
-    
-        elseif ($input['redirect'] == 'new')
-            
-            return redirect()->route('proprietors.create');
+        switch ($input['redirect']) {
+            case 'edit':
+                return redirect()->route('proprietors.edit', $id);
+                break;
+            case 'new':
+                return redirect()->route('proprietors.create');
+                break;
+            case 'new_page':
+                Session::flash('page', $input['page']);
+                return redirect()->route('proprietors.create');
+                break;
+            case 'new_page_plus1':
+                Session::flash('page', $input['page'] + 1);
+                return redirect()->route('proprietors.create');
+                break;
+        }
     }
 
     /**
