@@ -264,6 +264,7 @@
                     Add <span class="glyphicon glyphicon-plus"></span>
                 </button>
                 or <a href="{{ route('references.create') }}" target="_blank">Create new Confront invariant <span class="glyphicon glyphicon-new-window"></span></a>
+                or <a href="{{ route('proprietors.create') }}" target="_blank">Create new Propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
             </div>
         </div>
         
