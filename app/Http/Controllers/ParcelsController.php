@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Libraries\Calculator;
+
 use App\Parcel;
 use App\Proprietor;
 use App\Place;
@@ -309,31 +311,13 @@ class ParcelsController extends Controller
     private function calcValues($parcel, $input) {
         $fields = ['canne', 'coup', 'pugnerade', 'arpent', 'seteree', 'denier', 'sous', 'livre'];
         
+        $calculator = new Calculator();
+        
         foreach ($fields as $field) {
             $value = null;
             
-            if (isset($input[$field . '_input']) && strlen($input[$field . '_input']) > 0 && preg_match('/(\d+)(?:\s*)([\+\-\*\/])(?:\s*)(\d+)/', $input[$field . '_input'], $matches) !== FALSE){
-                
-                if (isset($matches[2])) {
-                    $operator = $matches[2];
-                
-                    switch($operator){
-                        case '+':
-                            $value = $matches[1] + $matches[3];
-                            break;
-                        case '-':
-                            $value = $matches[1] - $matches[3];
-                            break;
-                        case '*':
-                            $value = $matches[1] * $matches[3];
-                            break;
-                        case '/':
-                            $value = $matches[1] / $matches[3];
-                            break;
-                    }
-                } else {
-                    $value = str_replace(',', '.', $input[$field . '_input']);
-                }
+            if (isset($input[$field . '_input']) && strlen($input[$field . '_input']) > 0) {
+                $value = $calculator->calculate(str_replace(':','/', str_replace('x','*',$input[$field . '_input'])));
             }
             
             $parcel->{$field} = $value;
