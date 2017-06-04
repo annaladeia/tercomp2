@@ -16,6 +16,7 @@ class ParcelConnection extends Model
     protected $fillable = [
         'page_number',
         'orientation',
+        'uncertain',
         'comments'
     ];
     

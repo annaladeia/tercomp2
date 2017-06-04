@@ -214,6 +214,9 @@
                 <div class="form-group">
                     {!! Form::text('connection_comments[i]', null, ['placeholder' => 'Information complémentaire', 'class' => 'form-control']) !!}
                 </div>
+                <label class="radio-inline">
+                    {!! Form::checkbox('connection_uncertain[i]', 1) !!} Doute
+                </label>
                 <button class="btn btn-danger df-delete" type="button">
                     <span class="glyphicon glyphicon-minus"></span>
                 </button>
@@ -243,6 +246,9 @@
                     <div class="form-group">
                         {!! Form::text('connection_comments[]', $connection->comments, ['placeholder' => 'Information complémentaire', 'class' => 'form-control']) !!}
                     </div>
+                    <label class="radio-inline">
+                        {!! Form::checkbox('connection_uncertain['.$i.']', 1, $connection->uncertain) !!} Doute
+                    </label>
                     <button class="btn btn-danger df-delete" type="button">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>

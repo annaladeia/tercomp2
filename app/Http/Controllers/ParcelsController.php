@@ -216,9 +216,6 @@ class ParcelsController extends Controller
     
     private function storeRelations($parcel, $input)
     {
-        // echo '<pre>';
-        // print_r($input);
-        // die();
         if (isset($input['proprietor']))
             $parcel->proprietors()->sync($input['proprietor']);
         else
@@ -256,6 +253,7 @@ class ParcelsController extends Controller
                 
                 $connection->orientation = $orientation;
                 $connection->comments = $input['connection_comments'][$key];
+                $connection->uncertain = isset($input['connection_uncertain'][$key]) ? 1 : 0;
                 
                 $parcel->parcelConnections()->save($connection);
                 
