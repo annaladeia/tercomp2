@@ -2,3 +2,7 @@
     min-width: 126px;
     width: 126px;
 }
+
+.form-control.selectize-control {
+    min-width: 200px;
+}

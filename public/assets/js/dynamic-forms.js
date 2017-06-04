@@ -35,8 +35,8 @@ function dfGroup($el) {
         //clone content and append to container
         clonedContent.appendTo(self.container);
         
-        //init select2 for new content
-        select2.add(clonedContent, ! silent);
+        //init selectize for new content
+        selectize.add(clonedContent, ! silent);
         
         //init handleToggle
         forms.handleToggle(clonedContent);
@@ -61,8 +61,8 @@ function dfGroup($el) {
         content.remove();
     }
     
-    //remove select2 before creating content clone
-    select2.delete(self.content);
+    //remove selectize before creating content clone
+    selectize.delete(self.content);
     
     //detach content from DOM
     self.content.removeClass('df-content').addClass('df-content-item').detach().removeClass('hide');
