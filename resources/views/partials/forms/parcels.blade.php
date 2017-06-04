@@ -199,7 +199,7 @@
             
             <div class="form-inline form-group df-content hide" data-index-start="{{count($data->parcelConnections)}}">
                 <div class="form-group">
-                    {!! Form::select('connection_orientation[i]', [1 => 'Septentrion', 2 => 'Levant', 3 => 'Midi', 4 => 'Couchant'], null, ['class' => 'form-control']) !!}
+                    {!! Form::select('connection_orientation[i]', [2 => 'Levant', 3 => 'Midi', 4 => 'Couchant', 1 => 'Septentrion'], null, ['class' => 'form-control']) !!}
                 </div>
                 avec
                 <div class="form-group">
