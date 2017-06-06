@@ -34,4 +34,5 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('parceltypes', 'ParcelTypesController');
     Route::resource('references', 'ReferencesController');
     Route::resource('professions', 'ProfessionsController');
+    Route::resource('documents', 'DocumentsController');
 });

@@ -25,6 +25,11 @@ class Proprietor extends Model
         'page'
     ];
     
+    public function document()
+    {
+        return $this->belongsTo('Document');
+    }
+    
     public function parcels()
     {
         return $this->belongsToMany('App\Parcel');
