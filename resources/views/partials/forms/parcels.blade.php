@@ -86,7 +86,7 @@
             </div>
             
             <div class="form-group">
-                <button class="btn btn-success df-add" type="button">
+                <button class="btn btn-success df-add mousetrap" data-shortcut="alt+p" type="button">
                     Add <span class="glyphicon glyphicon-plus"></span>
                 </button>
                 or <a href="{{ route('proprietors.create') }}" target="_blank">Create new Propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
@@ -132,7 +132,7 @@
             </div>
             
             <div class="form-group">
-                <button class="btn btn-success df-add" type="button">
+                <button class="btn btn-success df-add mousetrap" data-shortcut="alt+t" type="button">
                     Add <span class="glyphicon glyphicon-plus"></span>
                 </button>
                 or <a href="{{ route('places.create') }}" target="_blank">Create new Toponyme <span class="glyphicon glyphicon-new-window"></span></a>
@@ -178,8 +178,11 @@
             </div>
             
             <div class="form-group">
-                <button class="btn btn-success df-add" type="button">
+                <button class="btn btn-success df-add mousetrap" data-shortcut="alt+n" type="button">
                     Add <span class="glyphicon glyphicon-plus"></span>
+                </button>
+                <button class="btn btn-success df-prefill mousetrap" data-shortcut="alt+v" data-values="Terre,Vigne" type="button">
+                    Add Terre et Vigne <span class="glyphicon glyphicon-plus"></span>
                 </button>
                 or <a href="{{ route('parceltypes.create') }}" target="_blank">Create new Nature <span class="glyphicon glyphicon-new-window"></span></a>
             </div>
@@ -260,7 +263,7 @@
             </div>
             
             <div class="form-group">
-                <button class="btn btn-success df-add" type="button">
+                <button class="btn btn-success df-add mousetrap" data-shortcut="alt+c" type="button">
                     Add <span class="glyphicon glyphicon-plus"></span>
                 </button>
                 or <a href="{{ route('references.create') }}" target="_blank">Create new Confront invariant <span class="glyphicon glyphicon-new-window"></span></a>
@@ -355,12 +358,12 @@
 
 <div class="pull-right">
 <a href="{{ route('parcels.index') }}" class="btn btn-link">Back to all Parcelles</a>
-{!! Form::button('Save Parcelle', ['class' => 'btn btn-primary form-btn-redirect-edit']) !!}
+{!! Form::button('Save Parcelle', ['class' => 'btn btn-primary form-btn-redirect-edit mousetrap', 'data-shortcut' => 'alt+s']) !!}
 {!! Form::submit('... & Add New', ['class' => 'btn btn-primary btn-success']) !!}
 {!! Form::button('... New proprietor, same page', ['data-redirect' => 'new_proprietor_page', 'class' => 'btn btn-primary btn-success form-btn-redirect-edit']) !!}
 {!! Form::button('... New proprietor, next page', ['data-redirect' => 'new_proprietor_page_plus1', 'class' => 'btn btn-primary btn-success form-btn-redirect-edit']) !!}
-{!! Form::button('... Same proprietor, same page', ['data-redirect' => 'copy_proprietor_page', 'class' => 'btn btn-primary btn-success form-btn-redirect-edit']) !!}
-{!! Form::button('... Same proprietor, next page', ['data-redirect' => 'copy_proprietor_page_plus1', 'class' => 'btn btn-primary btn-success form-btn-redirect-edit']) !!}
+{!! Form::button('... Same proprietor, same page', ['data-redirect' => 'copy_proprietor_page', 'class' => 'btn btn-warning form-btn-redirect-edit']) !!}
+{!! Form::button('... Same proprietor, next page', ['data-redirect' => 'copy_proprietor_page_plus1', 'class' => 'btn btn-warning form-btn-redirect-edit']) !!}
 </div>
 
 {!! Form::hidden('redirect', 'new') !!}

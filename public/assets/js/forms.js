@@ -5,7 +5,7 @@ var forms = {
         this.handleToggle($("body"));
         this.handleViewEntity($("body"));
         this.focusOnFirstField();
-        this.initKeyboardShortcuts();
+        this.handleShortcuts();
     },
     
     focusOnFirstField: function() {
@@ -44,17 +44,49 @@ var forms = {
         });
     },
     
-    initKeyboardShortcuts: function() {
-        $(window).bind('keydown', function(event) {
-            if (event.ctrlKey || event.metaKey) {
-                switch (String.fromCharCode(event.which).toLowerCase()) {
-                case 's':
-                    event.preventDefault();
-                    $(".btn[type='submit']").click();
-                    break;
-                }
-            }
+    handleShortcuts: function() {
+        var self = this;
+        
+        Mousetrap.bind('alt+=', function() {
+            self.navigateSection(true, 0);
         });
+        
+        Mousetrap.bind('alt+-', function() {
+            self.navigateSection(false, 0);
+        });
+    },
+    
+    navigateSection: function(forward, skip) {
+        var $focused = $(':focus'),
+            $focusedPanel,
+            $targetPanel;
+            
+        if ($focused) {
+           $focusedPanel = $focused.parents(".panel");
+        }
+        
+        if ($focusedPanel && $focusedPanel.length) {
+            if (forward) {
+                $targetPanel = $focusedPanel.nextAll('.panel:eq(' + skip + ')');
+            } else {
+                $targetPanel = $focusedPanel.prevAll('.panel:eq(' + skip + ')');
+            }
+        } else {
+            $targetPanel = $(".panel:visible:first");
+        }
+        
+        if ($targetPanel && $targetPanel.length) {
+            var $el = $targetPanel.find('input[type=text],select').filter(':first')
+            if ($el.length) {
+                if ($el.is('select')) {
+                    $el[0].selectize.focus();
+                } else {
+                    $el.focus();
+                }
+            } else {
+                this.navigateSection(forward, skip+1);
+            }
+        }
     }
 }
 

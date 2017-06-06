@@ -6,8 +6,6 @@ var selectize = {
         $el.each(function() {
             var $this = $(this);
             if (! $this.parents(".hide").length) {
-                
-                console.log('not hidden');
             
                 if (! $this.attr('multiple')) {
                     $this.selectize({
@@ -28,7 +26,6 @@ var selectize = {
     
     add: function($el, focus) {
         this.init($el.find('select'));
-        console.log(123);
         
         if (focus)
             this.focusSelect($el.find('select:first'));
