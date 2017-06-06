@@ -362,8 +362,8 @@
 {!! Form::submit('... & Add New', ['class' => 'btn btn-primary btn-success']) !!}
 {!! Form::button('... New proprietor, same page', ['data-redirect' => 'new_proprietor_page', 'class' => 'btn btn-primary btn-success form-btn-redirect-edit']) !!}
 {!! Form::button('... New proprietor, next page', ['data-redirect' => 'new_proprietor_page_plus1', 'class' => 'btn btn-primary btn-success form-btn-redirect-edit']) !!}
-{!! Form::button('... Same proprietor, same page', ['data-redirect' => 'copy_proprietor_page', 'class' => 'btn btn-warning form-btn-redirect-edit']) !!}
-{!! Form::button('... Same proprietor, next page', ['data-redirect' => 'copy_proprietor_page_plus1', 'class' => 'btn btn-warning form-btn-redirect-edit']) !!}
+{!! Form::button('... Same proprietor, same page', ['data-redirect' => 'copy_proprietor_page', 'class' => 'btn btn-warning form-btn-redirect-edit mousetrap', 'data-shortcut' => 'alt+z']) !!}
+{!! Form::button('... Same proprietor, next page', ['data-redirect' => 'copy_proprietor_page_plus1', 'class' => 'btn btn-warning form-btn-redirect-edit mousetrap', 'data-shortcut' => 'alt+shift+z']) !!}
 </div>
 
 {!! Form::hidden('redirect', 'new') !!}
