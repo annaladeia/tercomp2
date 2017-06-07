@@ -31,7 +31,6 @@ class AddHeritierOppositeToFamilyRelations extends Migration
                 'updated_at' => $r->updated_at
             ]);
         }
-        die();
     }
 
     /**
