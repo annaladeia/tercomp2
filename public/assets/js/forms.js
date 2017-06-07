@@ -34,6 +34,8 @@ var forms = {
                
             $options.addClass('hide');
             $options.filter(".form-toggle-option-" + value.toString()).removeClass('hide');
+            
+            selectize.init($("select:not(.selectized)"));
         });
     },
     
