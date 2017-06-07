@@ -21,6 +21,7 @@ function dfGroup($el) {
     
     //add a dynamic form section
     self.add = function(silent, noDelete, defaultValue) {
+        
         //clone content
         var clonedContent = self.content.clone();
         
@@ -64,6 +65,16 @@ function dfGroup($el) {
         
         if (! defaultValue) {
             clonedContent.find('input[type=text],select').filter(':visible:first').focus();
+        }
+        
+        if (mt.active) {
+            var $panel = clonedContent.parents(".panel");
+            if ($panel && $panel.length) {
+                var offset = $panel.offset().top - 100;
+                $('html, body').animate({
+                    scrollTop: offset
+                }, 500);
+            }
         }
         
     }

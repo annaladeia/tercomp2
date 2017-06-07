@@ -83,6 +83,12 @@ var forms = {
                 } else {
                     $el.focus();
                 }
+                
+                var offset = $targetPanel.offset().top - 100;
+                $('html, body').animate({
+                    scrollTop: offset
+                }, 500);
+                
             } else {
                 this.navigateSection(forward, skip+1);
             }

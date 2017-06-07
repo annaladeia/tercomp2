@@ -12,7 +12,9 @@ var mt = {
             
             if (shortcut) {
                 Mousetrap.bind(shortcut, function(e) {
-                    $this.click();    
+                    mt.active = true;
+                    $this.click();   
+                    mt.active = false;
                 });
             }
         });
