@@ -28,4 +28,22 @@ class Document extends Model
     {
         return $this->hasMany('App\Proprietor');
     }
+    
+    public function places()
+    {
+        return $this->hasMany('App\Place');
+    }
+    
+    public function references()
+    {
+        return $this->hasMany('App\Reference');
+    }
+    
+    public function getFieldDisplayAttribute()
+    {
+        $name = $this->name;
+        if ($name) $name .= ' - ';
+        $name .= $this->year;
+        return $name;
+    }
 }

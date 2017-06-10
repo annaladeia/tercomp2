@@ -21,11 +21,11 @@ class CreateDocumentsTable extends Migration
                 $table->tinyInteger('type');
                 $table->timestamps();
             });
-        }
         
-        $insertID = DB::table('documents')->insertGetId([
-            'type' => 1
-        ]);
+            $insertID = DB::table('documents')->insertGetId([
+                'type' => 1
+            ]);
+        }
         
         if (!Schema::hasColumn('parcels', 'document_id')) {
         
@@ -41,8 +41,24 @@ class CreateDocumentsTable extends Migration
             });
         }
         
+        if (!Schema::hasColumn('places', 'document_id')) {
+        
+            Schema::table('places', function (Blueprint $table) {
+                $table->integer('document_id');
+            });
+        }
+        
+        if (!Schema::hasColumn('references', 'document_id')) {
+        
+            Schema::table('references', function (Blueprint $table) {
+                $table->integer('document_id');
+            });
+        }
+        
         DB::table('proprietors')->update(['document_id' => $insertID]);
         DB::table('parcels')->update(['document_id' => $insertID]);
+        DB::table('places')->update(['document_id' => $insertID]);
+        DB::table('references')->update(['document_id' => $insertID]);
     }
 
     /**
@@ -52,6 +68,14 @@ class CreateDocumentsTable extends Migration
      */
     public function down()
     {
+        Schema::table('references', function (Blueprint $table) {
+            $table->dropColumn('document_id');
+        });
+        
+        Schema::table('places', function (Blueprint $table) {
+            $table->dropColumn('document_id');
+        });
+        
         Schema::table('proprietors', function (Blueprint $table) {
             $table->dropColumn('document_id');
         });

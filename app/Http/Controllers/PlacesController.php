@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Libraries\DocumentSession;
+
 use App\Place;
 use Session;
 
@@ -21,7 +23,13 @@ class PlacesController extends Controller
      */
     public function index()
     {
-        $data = Place::orderBy('name', 'asc')->get();
+        $document = DocumentSession::get();
+        
+        if ($document) {
+            
+            $data = $document->places;
+            
+        }
 
         return view('places.index')->withData($data);
     }
@@ -50,9 +58,14 @@ class PlacesController extends Controller
 
         $input = $request->all();
         
-        $place = Place::create($input);
+        if ($document = DocumentSession::get()) {
         
-        Session::flash('flash_message', 'Toponyme successfully added.');
+            $place = Place::create($input);
+            
+            $document->places()->save($place);
+            
+            Session::flash('flash_message', 'Toponyme successfully added.');
+        }
     
         if ($input['redirect'] == 'edit')
             
@@ -85,6 +98,8 @@ class PlacesController extends Controller
     public function edit($id)
     {
         $data = Place::findOrFail($id);
+        
+        DocumentSession::checkActiveDocument($data->document);
         
         return view('places.edit', compact('data'));
     }

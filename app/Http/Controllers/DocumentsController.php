@@ -133,5 +133,15 @@ class DocumentsController extends Controller
         
         return redirect()->route('documents.index');
     }
+    
+    public function changeActiveDocument($id = false)
+    {
+        if ($id) {
+            \App\Libraries\DocumentSession::setDocument($id);
+            Session::flash('flash_document_changed', true);
+        }
+        
+        return redirect()->route('home');
+    }
 
 }

@@ -18,6 +18,11 @@ class Reference extends Model
         'comments'
     ];
     
+    public function document()
+    {
+        return $this->belongsTo('App\Document');
+    }
+    
     public function parcelConnections()
     {
         return $this->hasMany('App\ParcelConnection')

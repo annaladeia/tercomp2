@@ -30,7 +30,7 @@ class Parcel extends Model
     
     public function document()
     {
-        return $this->belongsTo('Document');
+        return $this->belongsTo('App\Document');
     }
     
     public function proprietors()

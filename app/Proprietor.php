@@ -27,7 +27,7 @@ class Proprietor extends Model
     
     public function document()
     {
-        return $this->belongsTo('Document');
+        return $this->belongsTo('App\Document');
     }
     
     public function parcels()
@@ -152,7 +152,7 @@ class Proprietor extends Model
                     $familyRelation = mb_convert_case($relProprietor->name_fem, MB_CASE_TITLE);
                     break;
                 default:
-                    $familyRelation =  mb_convert_case($relProprietor->name_masc, MB_CASE_TITLE);
+                    $familyRelation = mb_convert_case($relProprietor->name_masc, MB_CASE_TITLE);
                     break;
             }
             $name .= str_replace('(S)', '(s)', $familyRelation) . ' de ' . $relProprietor->field_display;

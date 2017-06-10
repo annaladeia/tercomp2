@@ -6,6 +6,7 @@ var forms = {
         this.handleViewEntity($("body"));
         this.focusOnFirstField();
         this.initKeyboardShortcuts();
+        this.handleTriggerChange();
     },
     
     focusOnFirstField: function() {
@@ -55,6 +56,16 @@ var forms = {
                 }
             }
         });
+    },
+    
+    handleTriggerChange: function() {
+        $("select.form-trigger-change").change(function() {
+            var $this = $(this);
+            
+            $this.find(":selected").each(function () {
+                window.location = $this.attr('data-trigger-change-url') + '/' + $(this).val();
+            });
+        })
     }
 }
 

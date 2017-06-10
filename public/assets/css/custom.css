@@ -6,3 +6,7 @@
 .form-control.selectize-control {
     min-width: 200px;
 }
+
+.navbar .form-control {
+    margin-top: 8px;
+}

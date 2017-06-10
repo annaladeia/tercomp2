@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Libraries\DocumentSession;
 use App\Libraries\Calculator;
 
 use App\Parcel;
@@ -28,7 +29,14 @@ class ParcelsController extends Controller
      */
     public function index()
     {
-        $data = Parcel::with('proprietors')->orderBy('page_number', 'asc')->orderBy('front', 'asc')->orderBy('parcel_number', 'asc')->get();
+        
+        $document = DocumentSession::get();
+        
+        if ($document) {
+            
+            $data = $document->parcels;
+            
+        }
 
         return view('parcels.index')->withData($data);
     }
@@ -40,11 +48,15 @@ class ParcelsController extends Controller
      */
     public function create()
     {
-        $proprietors = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
-        $proprietorsExtended = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_extended_display', 'id');
-        $places = Place::orderBy('name', 'asc')->get()->lists('field_display', 'id');
+        $documents = \App\Document::with('proprietors.relatedProprietors')->where('id', DocumentSession::getID())->get();
+        foreach ($documents as $d) {
+            $proprietors = $d->proprietors->lists('field_display', 'id');
+            $proprietorsExtended = $d->proprietors->lists('field_extended_display', 'id');
+            $places = $d->places->lists('field_display', 'id');
+            $references = $d->references->lists('field_display', 'id');
+        }
+        
         $parceltypes = ParcelType::orderBy('name', 'asc')->get()->lists('field_display', 'id');
-        $references = Reference::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         
         $data = array();
         $preselectedProprietors = array();
@@ -77,12 +89,17 @@ class ParcelsController extends Controller
 
         $input = $request->all();
         
-        $parcel = Parcel::create($input);
+        if ($document = DocumentSession::get()) {
         
-        $this->storeRelations($parcel, $input);
-        $this->calcValues($parcel, $input);
-        
-        Session::flash('flash_message', 'Parcelle successfully added.');
+            $parcel = Parcel::create($input);
+            
+            $this->storeRelations($parcel, $input);
+            $this->calcValues($parcel, $input);
+            
+            $document->parcels()->save($parcel);
+            
+            Session::flash('flash_message', 'Parcelle successfully added.');
+        }
         
         switch ($input['redirect']) {
             case 'edit':
@@ -142,11 +159,19 @@ class ParcelsController extends Controller
     public function edit($id)
     {
         $data = Parcel::with('proprietors')->findOrFail($id);
-        $proprietors = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
-        $proprietorsExtended = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_extended_display', 'id');
-        $places = Place::orderBy('name', 'asc')->get()->lists('field_display', 'id');
-        $parceltypes = ParcelType::orderBy('name', 'asc')->get()->lists('field_display', 'id');
-        $references = Reference::orderBy('name', 'asc')->get()->lists('field_display', 'id');
+        
+        if ($documentID = DocumentSession::checkActiveDocument($data->document)) {
+            
+            $documents = \App\Document::with('proprietors.relatedProprietors')->where('id', $documentID)->get();
+            
+            foreach ($documents as $d) {
+                $proprietors = $d->proprietors->lists('field_display', 'id');
+                $proprietorsExtended = $d->proprietors->lists('field_extended_display', 'id');
+                $places = $d->places->lists('field_display', 'id');
+                $references = $d->references->lists('field_display', 'id');
+            }
+            $parceltypes = ParcelType::orderBy('name', 'asc')->get()->lists('field_display', 'id');
+        }
         
         return view('parcels.edit', compact('data', 'proprietors', 'proprietorsExtended', 'places', 'parceltypes', 'references'));
     }

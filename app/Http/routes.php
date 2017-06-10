@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', [
-    'as' => 'home',
-    'uses' => 'PagesController@home'
-]);
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +24,18 @@ Route::get('/', [
 */
 
 Route::group(['middleware' => ['web']], function () {
+    
+    Route::get('/', [
+        'as' => 'home',
+        'uses' => 'PagesController@home'
+    ]);
+    
+    Route::get('documents/changeActiveDocument/{id?}', [
+        'as' => 'changeActiveDocument',
+        'uses' => 'DocumentsController@changeActiveDocument'
+    ]);
+
+    
     Route::resource('proprietors', 'ProprietorsController');
     Route::resource('parcels', 'ParcelsController');
     Route::resource('places', 'PlacesController');
