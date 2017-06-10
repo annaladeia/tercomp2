@@ -273,6 +273,10 @@ class ProprietorsController extends Controller
                             $relProprietor->differential = trim($input['related_proprietor_differential'][$i]);
                             $relProprietor->save();
                             
+                            if ($document = DocumentSession::get()) {
+                                $document->proprietors()->save($relProprietor);
+                            }
+                            
                             $relProprietorsSyncArray[$relProprietor->id] = array('family_relation_id' => $input['related_type'][$i]);
                         }
                     }
