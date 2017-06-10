@@ -5,12 +5,8 @@ var forms = {
         this.handleToggle($("body"));
         this.handleViewEntity($("body"));
         this.focusOnFirstField();
-<<<<<<< HEAD
         this.handleShortcuts();
-=======
-        this.initKeyboardShortcuts();
         this.handleTriggerChange();
->>>>>>> @{-1}
     },
     
     focusOnFirstField: function() {
