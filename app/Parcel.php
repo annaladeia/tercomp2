@@ -28,6 +28,11 @@ class Parcel extends Model
         'comments'
     ];
     
+    public function document()
+    {
+        return $this->belongsTo('App\Document');
+    }
+    
     public function proprietors()
     {
         return $this->belongsToMany('App\Proprietor')

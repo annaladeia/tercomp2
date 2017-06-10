@@ -25,6 +25,11 @@ class Proprietor extends Model
         'page'
     ];
     
+    public function document()
+    {
+        return $this->belongsTo('App\Document');
+    }
+    
     public function parcels()
     {
         return $this->belongsToMany('App\Parcel');
@@ -147,7 +152,7 @@ class Proprietor extends Model
                     $familyRelation = mb_convert_case($relProprietor->name_fem, MB_CASE_TITLE);
                     break;
                 default:
-                    $familyRelation =  mb_convert_case($relProprietor->name_masc, MB_CASE_TITLE);
+                    $familyRelation = mb_convert_case($relProprietor->name_masc, MB_CASE_TITLE);
                     break;
             }
             $name .= str_replace('(S)', '(s)', $familyRelation) . ' de ' . $relProprietor->field_display;

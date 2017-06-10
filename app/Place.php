@@ -18,6 +18,11 @@ class Place extends Model
         'comments'
     ];
     
+    public function document()
+    {
+        return $this->belongsTo('App\Document');
+    }
+    
     public function parcels()
     {
         return $this->belongsToMany('App\Parcel')

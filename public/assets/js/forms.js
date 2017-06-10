@@ -5,7 +5,12 @@ var forms = {
         this.handleToggle($("body"));
         this.handleViewEntity($("body"));
         this.focusOnFirstField();
+<<<<<<< HEAD
         this.handleShortcuts();
+=======
+        this.initKeyboardShortcuts();
+        this.handleTriggerChange();
+>>>>>>> @{-1}
     },
     
     focusOnFirstField: function() {
@@ -95,6 +100,16 @@ var forms = {
                 this.navigateSection(forward, skip+1);
             }
         }
+    },
+    
+    handleTriggerChange: function() {
+        $("select.form-trigger-change").change(function() {
+            var $this = $(this);
+            
+            $this.find(":selected").each(function () {
+                window.location = $this.attr('data-trigger-change-url') + '/' + $(this).val();
+            });
+        })
     }
 }
 

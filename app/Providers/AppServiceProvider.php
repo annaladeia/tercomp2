@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('partials.nav', function($view) {
+            $view->with('documents', \App\Document::get()->lists('field_display', 'id'));
+            $view->with('documentID', \App\Libraries\DocumentSession::getID());
+        });
     }
 
     /**

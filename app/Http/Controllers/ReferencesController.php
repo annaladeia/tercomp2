@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Libraries\DocumentSession;
+
 use App\Reference;
 use Session;
 
@@ -21,7 +23,14 @@ class ReferencesController extends Controller
      */
     public function index()
     {
-        $data = Reference::orderBy('name', 'asc')->get();
+        
+        $document = DocumentSession::get();
+        
+        if ($document) {
+            
+            $data = $document->references;
+            
+        }
 
         return view('references.index')->withData($data);
     }
@@ -50,9 +59,14 @@ class ReferencesController extends Controller
 
         $input = $request->all();
         
-        $reference = Reference::create($input);
+        if ($document = DocumentSession::get()) {
         
-        Session::flash('flash_message', 'Confront invariant successfully added.');
+            $reference = Reference::create($input);
+            
+            $document->references()->save($reference);
+            
+            Session::flash('flash_message', 'Confront invariant successfully added.');
+        }
     
         if ($input['redirect'] == 'edit')
             
@@ -85,6 +99,8 @@ class ReferencesController extends Controller
     public function edit($id)
     {
         $data = Reference::findOrFail($id);
+        
+        DocumentSession::checkActiveDocument($data->document);
         
         return view('references.edit', compact('data'));
     }

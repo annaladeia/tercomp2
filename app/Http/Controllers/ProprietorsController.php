@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Libraries\DocumentSession;
+
 use App\Proprietor;
 use App\FamilyRelation;
 use App\Profession;
@@ -23,7 +25,14 @@ class ProprietorsController extends Controller
      */
     public function index()
     {
-        $data = Proprietor::with('professions')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get();
+        
+        $document = DocumentSession::get();
+        
+        if ($document) {
+            
+            $data = $document->proprietors;
+            
+        }
 
         return view('proprietors.index')->withData($data);
     }
@@ -35,7 +44,11 @@ class ProprietorsController extends Controller
      */
     public function create()
     {
-        $proprietors = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
+        $documents = \App\Document::with('proprietors.relatedProprietors')->where('id', DocumentSession::getID())->get();
+        foreach ($documents as $d) {
+            $proprietors = $d->proprietors->lists('field_display', 'id');
+        }
+        
         $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('field_display', 'id');
         $professions = Profession::orderBy('name', 'asc')->get()->lists('field_display', 'id');
         
@@ -59,11 +72,16 @@ class ProprietorsController extends Controller
 
         $input = $request->all();
         
-        $proprietor = Proprietor::create($input);
+        if ($document = DocumentSession::get()) {
         
-        $this->storeRelations($proprietor, $input);
-        
-        Session::flash('flash_message', 'Propriétaire successfully added.');
+            $proprietor = Proprietor::create($input);
+            
+            $this->storeRelations($proprietor, $input);
+            
+            $document->proprietors()->save($proprietor);
+            
+            Session::flash('flash_message', 'Propriétaire successfully added.');
+        }
             
         switch ($input['redirect']) {
             case 'edit':
@@ -106,18 +124,27 @@ class ProprietorsController extends Controller
     {
         $data = Proprietor::with('relatedProprietors')->findOrFail($id);
         
-        $proprietors = Proprietor::with('relatedProprietors')->orderBy('name', 'asc')->orderBy('first_name', 'asc')->orderBy('nickname', 'asc')->get()->lists('field_display', 'id');
-        $professions = Profession::orderBy('name', 'asc')->get()->lists('field_display', 'id');
+        if ($documentID = DocumentSession::checkActiveDocument($data->document)) {
+            
+            $documents = \App\Document::with('proprietors.relatedProprietors')->where('id', $documentID)->get();
+            
+            foreach ($documents as $d) {
+                $proprietors = $d->proprietors->lists('field_display', 'id');
+            }
+            
+            $professions = Profession::orderBy('name', 'asc')->get()->lists('field_display', 'id');
+            
+            switch ($data->sex) {
+                case 1:
+                    $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('name_masc_display', 'id');
+                    break;
+                case 2:
+                    $familyRelations = FamilyRelation::orderBy('name_fem', 'asc')->get()->lists('name_fem_display', 'id');
+                    break;
+                default:
+                    $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('field_display', 'id');
+            }
         
-        switch ($data->sex) {
-            case 1:
-                $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('name_masc_display', 'id');
-                break;
-            case 2:
-                $familyRelations = FamilyRelation::orderBy('name_fem', 'asc')->get()->lists('name_fem_display', 'id');
-                break;
-            default:
-                $familyRelations = FamilyRelation::orderBy('name_masc', 'asc')->get()->lists('field_display', 'id');
         }
         
         return view('proprietors.edit', compact('data', 'proprietors', 'familyRelations', 'professions'));
