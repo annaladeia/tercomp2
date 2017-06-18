@@ -87,6 +87,10 @@ class Proprietor extends Model
             $name .= " " . $this->institution;
         }
         
+        if ($this->differential) {
+            $name .= " " . $this->differential;
+        }
+        
         if (trim(str_replace(',', '', str_replace(' ', '', $name))) == '') {
             $i = 0;
             foreach ($this->relatedProprietors as $relProprietor) {
@@ -106,10 +110,6 @@ class Proprietor extends Model
         
         if ($this->occupation) {
             $name .= " (" . $this->occupation . ")";
-        }
-        
-        if ($this->differential) {
-            $name .= " " . $this->differential;
         }
         
         return trim($name);
