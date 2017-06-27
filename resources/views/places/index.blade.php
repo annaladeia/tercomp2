@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1>Toponymes</h1>
+<h1>Entités toponymiques</h1>
 <p class="lead">Here's a list of all toponymes. <a href="{{ route('places.create') }}">Add a new one?</a></p>
 <hr>
 

@@ -16,7 +16,12 @@ class Document extends Model
     protected $fillable = [
         'name',
         'year',
-        'type'
+        'type',
+        'archive',
+        'code',
+        'authors',
+        'representatives',
+        'comments'
     ];
     
     public function parcels()

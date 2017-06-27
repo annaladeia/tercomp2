@@ -9,6 +9,7 @@ return array(
     'AddArpentInputToParcelsTable' => $baseDir . '/database/migrations/2017_04_22_101123_add_arpent_input_to_parcels_table.php',
     'AddArpentToParcelsTable' => $baseDir . '/database/migrations/2017_04_22_100902_add_arpent_to_parcels_table.php',
     'AddDifferentialToProprietors' => $baseDir . '/database/migrations/2016_04_23_165556_add_differential_to_proprietors.php',
+    'AddFieldsToDocumentsTable' => $baseDir . '/database/migrations/2017_06_27_185047_add_fields_to_documents_table.php',
     'AddFolioToProprietorsTable' => $baseDir . '/database/migrations/2016_07_23_152246_add_folio_to_proprietors_table.php',
     'AddHeritierOppositeToFamilyRelations' => $baseDir . '/database/migrations/2017_06_07_201118_add_heritier_opposite_to_family_relations.php',
     'AddInstitutionToProprietors' => $baseDir . '/database/migrations/2016_07_31_133334_add_institution_to_proprietors.php',

@@ -9,7 +9,7 @@
 @include('partials.alerts.success')
 
 <dl class="dl-horizontal">
-    <dt>Page / folio</dt>
+    <dt>Folio</dt>
     <dd>{{ $data->page_number }} ({{ $data->front ? 'recto' : 'verso'}})</dd>
     <dt>Nr. de parcelle de la page</dt>
     <dd>{{ $data->parcel_number }}</dd>

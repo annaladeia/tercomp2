@@ -13,7 +13,7 @@
         <tr>
             <th>#</th>
             <th>Nom</th>
-            <th>Prenom</th>
+            <th>Prénom</th>
             <th>Surnom</th>
             <th>Folio</th>
             <th>Métier(s)</th>

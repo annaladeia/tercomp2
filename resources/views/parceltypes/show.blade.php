@@ -25,7 +25,7 @@
             {!! Form::submit('Delete Nature', ['class' => 'btn btn-confirm-delete btn-danger']) !!}
         {!! Form::close() !!}
         <div class="pull-right">&nbsp;</div>
-        <a href="{{ route('parceltypes.index') }}" class="btn btn-link">Back to all Natures</a>
+        <a href="{{ route('parceltypes.index') }}" class="btn btn-link">Back to all Natures des parcelles</a>
     </div>
 </div>
 

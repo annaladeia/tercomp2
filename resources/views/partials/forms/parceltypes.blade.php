@@ -24,7 +24,7 @@
 </div>
 
 <div class="pull-right">
-<a href="{{ route('parceltypes.index') }}" class="btn btn-link">Back to all Natures</a>
+<a href="{{ route('parceltypes.index') }}" class="btn btn-link">Back to all Natures des parcelles</a>
 {!! Form::button('Save Nature', ['class' => 'btn btn-primary form-btn-redirect-edit']) !!}
 {!! Form::submit('Save Nature & Add New', ['class' => 'btn btn-primary btn-success']) !!}
 </div>

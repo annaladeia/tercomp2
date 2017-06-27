@@ -3,15 +3,29 @@
 @section('content')
 
 <h1>{{ $data->name }}</h1>
-<p class="lead">{{ $data->first_name }}</p>
 <hr>
 
 <dl class="dl-horizontal">
-    <dt>An</dt>
+    <dt>Date</dt>
     <dd>{!! nl2br(e($data->year)) !!}</dd>
     
     <dt>Type</dt>
     <dd>{!! nl2br(e($data->type)) !!}</dd>
+    
+    <dt>Archive</dt>
+    <dd>{!! nl2br(e($data->archive)) !!}</dd>
+    
+    <dt>Cote</dt>
+    <dd>{!! nl2br(e($data->code)) !!}</dd>
+    
+    <dt>Responsables</dt>
+    <dd>{!! nl2br(e($data->authors)) !!}</dd>
+    
+    <dt>Représentants</dt>
+    <dd>{!! nl2br(e($data->representatives)) !!}</dd>
+    
+    <dt>Autres renseignements</dt>
+    <dd>{!! nl2br(e($data->comments)) !!}</dd>
 </dl>
 
 

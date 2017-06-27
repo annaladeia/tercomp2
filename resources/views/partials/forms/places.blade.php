@@ -24,7 +24,7 @@
 </div>
 
 <div class="pull-right">
-<a href="{{ route('places.index') }}" class="btn btn-link">Back to all Toponymes</a>
+<a href="{{ route('places.index') }}" class="btn btn-link">Back to all Entités toponymiques</a>
 {!! Form::button('Save Toponyme', ['class' => 'btn btn-primary form-btn-redirect-edit']) !!}
 {!! Form::submit('Save Toponyme & Add New', ['class' => 'btn btn-primary btn-success']) !!}
 </div>

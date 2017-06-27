@@ -13,7 +13,7 @@
         <tr>
             <th>#</th>
             <th>Propriétaire(s)</th>
-            <th>Page / folio</th>
+            <th>Folio</th>
             <th class="table__buttons no-sort"></th>
         </tr>
     </thead>

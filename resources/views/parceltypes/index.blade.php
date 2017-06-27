@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1>Natures</h1>
+<h1>Natures des parcelles</h1>
 <p class="lead">Here's a list of all natures. <a href="{{ route('parceltypes.create') }}">Add a new one?</a></p>
 <hr>
 

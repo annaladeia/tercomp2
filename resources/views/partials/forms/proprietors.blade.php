@@ -24,7 +24,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('first_name', 'Prenom:', ['class' => 'control-label']) !!}
+    {!! Form::label('first_name', 'Prénom:', ['class' => 'control-label']) !!}
     {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
 </div>
 
@@ -42,10 +42,10 @@
             {{ Form::radio('sex', 0, true) }} Inconnu
         </label>
         <label class="radio-inline">
-            {{ Form::radio('sex', 1) }} Mâle
+            {{ Form::radio('sex', 1) }} Masculin
         </label>
         <label class="radio-inline">
-            {{ Form::radio('sex', 2) }} Femelle
+            {{ Form::radio('sex', 2) }} Féminin
         </label>
     </div>
     
@@ -69,14 +69,14 @@
         </div>
         de
         <div class="form-group">
-            {!! Form::select('related_connection_type[]', [1 => 'Propriétaire enregistre', 2 => 'Nouveau propriétaire'], null, ['class' => 'form-toggle form-control']) !!}
+            {!! Form::select('related_connection_type[]', [1 => 'Propriétaire enregistré', 2 => 'Nouveau propriétaire'], null, ['class' => 'form-toggle form-control']) !!}
         </div>
         <div class="form-group form-toggle-option form-toggle-option-1">
             {!! Form::select('related_proprietor[]', $proprietors, null, ['class' => 'df-unique form-control form-entity']) !!}
         </div>
         <div class="form-group form-toggle-option form-toggle-option-2 hide">
             {!! Form::text('related_proprietor_name[]', null, ['class' => 'form-control', 'placeholder' => 'Nom']) !!}
-            {!! Form::text('related_proprietor_first_name[]', null, ['class' => 'form-control', 'placeholder' => 'Prenom']) !!}
+            {!! Form::text('related_proprietor_first_name[]', null, ['class' => 'form-control', 'placeholder' => 'Prénom']) !!}
             {!! Form::text('related_proprietor_differential[]', null, ['class' => 'form-control', 'placeholder' => 'Discriminateur']) !!}
         </div>
         <button class="btn btn-danger df-delete" type="button">
@@ -94,7 +94,7 @@
             </div>
             de
             <div class="form-group">
-                {!! Form::select('related_connection_type[]', [1 => 'Propriétaire enregistre', 2 => 'Nouveau propriétaire'], null, ['class' => 'form-toggle form-control']) !!}
+                {!! Form::select('related_connection_type[]', [1 => 'Propriétaire enregistré', 2 => 'Nouveau propriétaire'], null, ['class' => 'form-toggle form-control']) !!}
             </div>
             <div class="form-group form-toggle-option form-toggle-option-1">
                 {!! Form::select('related_proprietor[]', $proprietors, $proprietor->id, ['class' => 'df-unique form-control form-entity']) !!}
@@ -130,7 +130,7 @@
     {!! Form::label('profession[]', 'Métier:', ['class' => 'control-label']) !!}
     <div class="form-inline form-group df-content hide">
         <div class="form-group">
-            {!! Form::select('profession_type[]', [1 => 'Métier enregistre', 2 => 'Nouveau métier'], null, ['class' => 'form-toggle form-control']) !!}
+            {!! Form::select('profession_type[]', [1 => 'Métier enregistré', 2 => 'Nouveau métier'], null, ['class' => 'form-toggle form-control']) !!}
         </div>
         <div class="form-group form-toggle-option form-toggle-option-1">
             {!! Form::select('profession[]', $professions, null, ['class' => 'df-unique form-control']) !!}
@@ -148,7 +148,7 @@
         @foreach ($data->professions as $profession)
         <div class="form-inline form-group df-content-item">
             <div class="form-group">
-                {!! Form::select('profession_type[]', [1 => 'Métier enregistre', 2 => 'Nouveau métier'], null, ['class' => 'form-toggle form-control']) !!}
+                {!! Form::select('profession_type[]', [1 => 'Métier enregistré', 2 => 'Nouveau métier'], null, ['class' => 'form-toggle form-control']) !!}
             </div>
             <div class="form-group form-toggle-option form-toggle-option-1">
                 {!! Form::select('profession[]', $professions, $profession->id, ['class' => 'df-unique form-control form-entity']) !!}
