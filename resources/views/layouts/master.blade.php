@@ -37,6 +37,7 @@
 <script src="/assets/js/tables.js"></script>
 <script src="/assets/js/actions.js"></script>
 <script src="/assets/js/mousetrap.js"></script>
+<script src="/assets/js/replace.js"></script>
 
 </body>
 </html>

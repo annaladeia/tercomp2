@@ -25,8 +25,7 @@ class Reference extends Model
     
     public function parcelConnections()
     {
-        return $this->hasMany('App\ParcelConnection')
-                    ->withTimestamps();
+        return $this->hasMany('App\ParcelConnection');
     }
     
     public function getFieldDisplayAttribute()

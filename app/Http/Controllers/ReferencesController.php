@@ -152,4 +152,41 @@ class ReferencesController extends Controller
         return redirect()->route('references.index');
     }
 
+
+    /**
+     * Replaces one or multiple references by another reference
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function replaceReference(Request $request)
+    {
+        $this->validate($request, [
+            'replacement' => 'required',
+            'items' => 'required'
+            
+        ]);
+
+        $input = $request->all();
+        
+        $replacementReference = Reference::findOrFail($input['replacement']);
+        
+        if ($replacementReference) {
+            foreach ($input['items'] as $id) {
+                if ($id != $input['replacement']) {
+                    $reference = Reference::findOrFail($id);
+                    if ($reference) {
+                        foreach ($reference->parcelConnections()->get() as $pc) {
+                            $pc->reference()->associate($replacementReference);
+                            $pc->save();
+                        }
+                        $reference->delete();
+                    }
+                }
+            }
+        }
+    
+        return redirect()->route('references.index');
+        
+    }
+
 }

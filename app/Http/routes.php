@@ -22,6 +22,7 @@
 | kernel and includes session state, CSRF protection, and more.
 |
 */
+    
 
 Route::group(['middleware' => ['web']], function () {
     
@@ -34,6 +35,8 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'changeActiveDocument',
         'uses' => 'DocumentsController@changeActiveDocument'
     ]);
+    
+    Route::any('references/replace', 'ReferencesController@replaceReference')->name('referencesReplace');
 
     
     Route::resource('proprietors', 'ProprietorsController');
