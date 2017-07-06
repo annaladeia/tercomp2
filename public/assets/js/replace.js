@@ -3,11 +3,11 @@ var replace = {
     init: function() {
         var self = this;
         
-        self.$replaceItems = $(".js-replace-item");
+        
         self.$replaceTarget = $(".js-replace-target");
         self.$replaceForm = self.$replaceTarget.parents("form");
-        
-        self.$replaceItems.change(function(e) {
+            
+        $(document).on('change', ".js-replace-item", function(e) {
             self.checkSelected();
         });
         
@@ -36,7 +36,7 @@ var replace = {
     },
     
     hasSelectedItems: function() {
-        return this.$replaceItems.filter(":checked").length > 0;
+        return $(".js-replace-item").filter(":checked").length > 0;
     }
     
 }
