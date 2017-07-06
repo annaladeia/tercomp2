@@ -37,7 +37,7 @@ Route::group(['middleware' => ['web']], function () {
     ]);
     
     Route::any('references/replace', 'ReferencesController@replaceReference')->name('referencesReplace');
-
+    Route::any('places/replace', 'PlacesController@replacePlace')->name('placesReplace');
     
     Route::resource('proprietors', 'ProprietorsController');
     Route::resource('parcels', 'ParcelsController');

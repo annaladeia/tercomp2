@@ -151,4 +151,43 @@ class PlacesController extends Controller
         return redirect()->route('places.index');
     }
 
+
+    /**
+     * Replaces one or multiple places by another place
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function replacePlace(Request $request)
+    {
+        $this->validate($request, [
+            'replacement' => 'required',
+            'items' => 'required'
+        ]);
+
+        $input = $request->all();
+        
+        $replacementPlace = Place::findOrFail($input['replacement']);
+        
+        if ($replacementPlace) {
+            foreach ($input['items'] as $id) {
+                if ($id != $input['replacement']) {
+                    $place = Place::findOrFail($id);
+                    if ($place) {
+                        foreach ($place->parcels()->get() as $p) {
+                            $p->places()->detach($id);
+                            $p->places()->attach($input['replacement']);
+                            $p->save();
+                        }
+                        $place->delete();
+                    }
+                }
+            }
+        }
+    
+        Session::flash('flash_message', 'Toponyme(s) successfully replaced.');
+    
+        return redirect()->route('places.index');
+        
+    }
+
 }

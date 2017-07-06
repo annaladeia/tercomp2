@@ -185,6 +185,8 @@ class ReferencesController extends Controller
             }
         }
     
+        Session::flash('flash_message', 'Confront(s) invariant successfully replaced.');
+    
         return redirect()->route('references.index');
         
     }
