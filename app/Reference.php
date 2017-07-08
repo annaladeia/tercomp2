@@ -15,7 +15,8 @@ class Reference extends Model
      */
     protected $fillable = [
         'name',
-        'comments'
+        'comments',
+        'type'
     ];
     
     public function document()

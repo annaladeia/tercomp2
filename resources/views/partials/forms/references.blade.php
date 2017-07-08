@@ -19,6 +19,18 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('type', 'Type:', ['class' => 'control-label']) !!}
+    <div>
+        <label class="radio-inline">
+            {{ Form::radio('type', 1, true) }} ligne
+        </label>
+        <label class="radio-inline">
+            {{ Form::radio('type', 2) }} point
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
     {!! Form::label('comments', 'Autre renseigment:', ['class' => 'control-label']) !!}
     {!! Form::textarea('comments', null, ['class' => 'form-control']) !!}
 </div>

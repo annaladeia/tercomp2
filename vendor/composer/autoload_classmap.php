@@ -16,6 +16,7 @@ return array(
     'AddOppositeToFamilyRelations' => $baseDir . '/database/migrations/2016_12_03_131013_add_opposite_to_family_relations.php',
     'AddProfessionIdToProprietorsTable' => $baseDir . '/database/migrations/2016_12_26_160742_add_profession_id_to_proprietors_table.php',
     'AddSexToProprietors' => $baseDir . '/database/migrations/2016_12_03_130336_add_sex_to_proprietors.php',
+    'AddTypeToReferenceTable' => $baseDir . '/database/migrations/2017_07_08_134609_add_type_to_reference_table.php',
     'AddUncertainToParcelConnectionsTable' => $baseDir . '/database/migrations/2017_06_04_142534_add_uncertain_to_parcel_connections_table.php',
     'CreateDocumentsTable' => $baseDir . '/database/migrations/2017_06_05_125507_create_documents_table.php',
     'CreateFamilyRelationsTable' => $baseDir . '/database/migrations/2016_04_16_102927_create_family_relations_table.php',
