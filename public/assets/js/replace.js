@@ -3,26 +3,29 @@ var replace = {
     init: function() {
         var self = this;
         
-        
         self.$replaceTarget = $(".js-replace-target");
-        self.$replaceForm = self.$replaceTarget.parents("form");
+        
+        if (self.$replaceTarget.length) {
             
-        $(document).on('change', ".js-replace-item", function(e) {
-            self.checkSelected();
-        });
-        
-        self.$replaceTarget.change(function() {
-            var value = self.$replaceTarget.val();
-            setTimeout(function() {
-                if (value > 0 && confirm('Are you sure you want to perform the replacement?')) {
-                    self.$replaceForm.submit();
-                } else {
-                    self.$replaceTarget[0].selectize.setValue('');
-                }
+            self.$replaceForm = self.$replaceTarget.parents("form");
+            
+            $(document).on('change', ".js-replace-item", function(e) {
+                self.checkSelected();
             });
-        });
-        
-        self.checkSelected();
+            
+            self.$replaceTarget.change(function() {
+                var value = self.$replaceTarget.val();
+                setTimeout(function() {
+                    if (value > 0 && confirm('Are you sure you want to perform the replacement?')) {
+                        self.$replaceForm.submit();
+                    } else {
+                        self.$replaceTarget[0].selectize.setValue('');
+                    }
+                });
+            });
+            
+            self.checkSelected();
+        }
     },
     
     checkSelected: function() {
