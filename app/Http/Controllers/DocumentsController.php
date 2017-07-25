@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Document;
+use App\Place;
 use Session;
 
 class DocumentsController extends Controller
@@ -142,6 +143,53 @@ class DocumentsController extends Controller
         }
         
         return redirect()->route('home');
+    }
+    
+    public function generateMap($id) {
+        $data = Document::findOrFail($id);
+        
+        return view('documents.map')->withData($data);
+    }
+    
+    public function generateMapJSON($id) {
+        
+        //1 get parcels with toponyme ville
+        
+        $ville = Place::where('name', 'Ville')->first();
+        
+        if ($ville) {
+            $parcelRecords = $ville->parcels()->get();
+            
+            $parcels = array();
+            
+            foreach ($parcelRecords as $p) {
+                $parcels[] = array('record' => $p);
+            }
+            
+            if (sizeof($parcels) > 0) {
+                $parcel = $parcels[0];
+                
+                $parcel['x'] = 0;
+                $parcel['y'] = 0;
+                
+                echo 'test';
+                echo $parcels[0]['x'];
+                
+                //get confronts
+                
+            }
+            
+        }
+        
+        die();
+        
+        $response = array(
+            ['data' => ['id' => 'n1'], 'position' => ['x' => 0, 'y' => 0]],
+            ['data' => ['id' => 'n2'], 'position' => ['x' => 0, 'y' => -100]],
+            ['data' => ['id' => 'e1', 'source' => 'n1', 'target' => 'n2']]
+        );
+        
+        return json_encode($response);
     }
 
 }

@@ -39,6 +39,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::any('references/replace', 'ReferencesController@replaceReference')->name('referencesReplace');
     Route::any('places/replace', 'PlacesController@replacePlace')->name('placesReplace');
     
+    Route::get('documents/map/{id?}', 'DocumentsController@generateMap')->name('documents.map');
+    Route::get('documents/getMapJSON/{id?}', 'DocumentsController@generateMapJSON')->name('documents.mapJSON');
+    
     Route::resource('proprietors', 'ProprietorsController');
     Route::resource('parcels', 'ParcelsController');
     Route::resource('places', 'PlacesController');

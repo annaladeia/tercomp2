@@ -30,6 +30,8 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
 <script src="/assets/js/libs/selectize.min.js"></script>
 <script src="/assets/js/libs/mousetrap.min.js"></script>
+<script src="/assets/js/libs/cytoscape.min.js"></script>
+<script src="/assets/js/libs/cytoscape-graphml.js"></script>
 <script src="//cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.js"></script>
 <script src="/assets/js/selectize.js"></script>
 <script src="/assets/js/dynamic-forms.js"></script>
@@ -38,6 +40,7 @@
 <script src="/assets/js/actions.js"></script>
 <script src="/assets/js/mousetrap.js"></script>
 <script src="/assets/js/replace.js"></script>
+<script src="/assets/js/map.js"></script>
 
 </body>
 </html>

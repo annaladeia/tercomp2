@@ -32,6 +32,8 @@
 <div class="row">
 
     <div class="col-md-12 text-right">
+        <a href="{{ route('documents.map', $data->id) }}" class="btn btn-warning pull-right">Generate map</a>
+        <div class="pull-right">&nbsp;</div>
         <a href="{{ route('documents.edit', $data->id) }}" class="btn btn-primary pull-right">Edit Document</a>
         <div class="pull-right">&nbsp;</div>
         {!! Form::open([
