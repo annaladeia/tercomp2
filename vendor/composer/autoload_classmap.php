@@ -22,6 +22,7 @@ return array(
     'CreateFamilyRelationsTable' => $baseDir . '/database/migrations/2016_04_16_102927_create_family_relations_table.php',
     'CreateParcelConnectionsProprietorsTable' => $baseDir . '/database/migrations/2017_05_28_095528_create_parcel_connections_proprietors_table.php',
     'CreateParcelConnectionsTable' => $baseDir . '/database/migrations/2016_04_30_141528_create_parcel_connections_table.php',
+    'CreateParcelNewProprietorTable' => $baseDir . '/database/migrations/2017_07_25_162451_create_parcel_new_proprietor_table.php',
     'CreateParcelParcelTypeTable' => $baseDir . '/database/migrations/2016_04_30_135356_create_parcel_parcel_type_table.php',
     'CreateParcelPlaceTable' => $baseDir . '/database/migrations/2016_04_30_135322_create_parcel_place_table.php',
     'CreateParcelProprietorTable' => $baseDir . '/database/migrations/2016_04_30_135213_create_parcel_proprietor_table.php',

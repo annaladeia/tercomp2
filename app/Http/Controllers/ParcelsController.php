@@ -18,6 +18,7 @@ use App\Place;
 use App\ParcelType;
 use App\Reference;
 use App\ParcelConnection;
+use App\ParcelMutation;
 use Session;
 
 class ParcelsController extends Controller
@@ -145,7 +146,7 @@ class ParcelsController extends Controller
      */
     public function show($id)
     {
-        $data = Parcel::with('proprietors')->with('parcelConnections.reference')->with('parcelConnections.proprietors.relatedProprietors')->findOrFail($id);
+        $data = Parcel::with('proprietors')->with('parcelConnections.reference')->with('parcelConnections.proprietors.relatedProprietors')->with('parcelMutations.proprietors.relatedProprietors')->findOrFail($id);
         
         return view('parcels.show')->withData($data);
     }
@@ -300,7 +301,7 @@ class ParcelsController extends Controller
                 
                 //connection with proprietor
                 if ($input['connection_type'][$key] == 1) {
-                    if (isset($input['connection_proprietors'])) {
+                    if (isset($input['connection_proprietors'][$key])) {
                         $connection->proprietors()->sync($input['connection_proprietors'][$key]);
                         $connection->reference()->dissociate();
                     } else {
@@ -331,6 +332,50 @@ class ParcelsController extends Controller
             }
         }
             
+        //parcel mutations
+        $mutations = $parcel->parcelMutations()->get();
+        
+        if ($mutations)
+            $mutationIds = $mutations->lists('id')->toArray();
+    
+        if (isset($input['mutation_proprietors'])) {
+            
+            foreach ($input['mutation_proprietors'] as $key => $orientation) {
+            
+                if (isset($input['mutation_id'][$key])) {
+                    $id = $input['mutation_id'][$key];
+                    $mutation = ParcelMutation::findOrFail($id);
+                    if (($i = array_search($id, $mutationIds)) !== false) {
+                        unset($mutationIds[$i]);
+                    }
+                } else {
+                    $mutation = new ParcelMutation;
+                }
+                
+                $mutation->year = $input['mutation_year'][$key];
+                $mutation->month = $input['mutation_month'][$key];
+                $mutation->day = $input['mutation_day'][$key];
+                $mutation->share = $input['mutation_share'][$key];
+                $mutation->reason = $input['mutation_reason'][$key];
+                $mutation->comments = $input['mutation_comments'][$key];
+                
+                $parcel->parcelMutations()->save($mutation);
+                
+                $mutation->proprietors()->sync($input['mutation_proprietors'][$key]);
+                    
+            }
+            
+            if ($mutations) {
+                foreach ($mutationIds as $mutationId) {
+                    ParcelMutation::findOrFail($mutationId)->delete();
+                }
+            }
+            
+        } elseif ($mutations) {
+            foreach ($mutations as $mutation) {
+                $mutation->delete();
+            }
+        }
     }
     
     private function calcValues($parcel, $input) {
