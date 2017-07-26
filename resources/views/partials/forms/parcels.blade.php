@@ -426,7 +426,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('comments', 'Autre renseigment:', ['class' => 'control-label']) !!}
+    {!! Form::label('comments', 'Autres renseigments:', ['class' => 'control-label']) !!}
     {!! Form::textarea('comments', null, ['class' => 'form-control']) !!}
 </div>
 

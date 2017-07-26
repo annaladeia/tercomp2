@@ -33,7 +33,7 @@
     <a href="{{ route('parcels.show', $parcel->id) }}">Parcelle ID {{ $parcel->id }}</a><br/>
     @endforeach
     </dd>
-    <dt>Autre renseigment</dt>
+    <dt>Autres renseigments</dt>
     <dd>{!! nl2br(e($data->comments)) !!}</dd>
 </dl>
 
