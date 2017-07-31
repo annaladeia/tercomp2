@@ -414,7 +414,7 @@
             </div>
             
             <div class="form-group">
-                <button class="btn btn-success df-add mousetrap" data-shortcut="alt+c" type="button">
+                <button class="btn btn-success df-add mousetrap" data-shortcut="alt+q" type="button">
                     Add <span class="glyphicon glyphicon-plus"></span>
                 </button>
                 or <a href="{{ route('proprietors.create') }}" target="_blank">Create new Propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
