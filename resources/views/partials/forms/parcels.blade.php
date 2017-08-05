@@ -240,7 +240,6 @@
                         {!! Form::select('connection_type[]', [1 => 'Propriétaire voisin', 2 => 'Confront invariant'], $connection->proprietorIDs ? 1 : 2, ['class' => 'form-toggle form-control']) !!}
                     </div>
                     <div class="form-group form-toggle-option form-toggle-option-1 @if ($connection->reference_id) hide @endif">
-                        {{$connection->reference_id}}
                         {!! Form::select('connection_proprietors['.$i.'][]', $proprietorsExtended, $connection->proprietorIDs, ['class' => 'form-control form-entity', 'multiple' => 'multiple']) !!}
                     </div>
                     <div class="form-group form-toggle-option form-toggle-option-2 @if ($connection->proprietorIDs) hide @endif">
@@ -351,8 +350,83 @@
     
 </div>
 
+<div class="panel panel-default">
+    
+    <div class="panel-heading">Nouveaux Propriétaires</div>
+    
+    <div class="panel-body">
+
+        <div class="form-group df-group df-hidden">
+            
+            <div class="form-inline form-group df-content hide" data-index-start="{{count($data->parcelMutations)}}">
+                <div class="form-group">
+                    {!! Form::text('mutation_month[i]', null, ['placeholder' => 'Mois', 'class' => 'form-control', 'maxlength' => 2, 'style' => 'width: 40px']) !!}
+                    {!! Form::text('mutation_day[i]', null, ['placeholder' => 'Journée', 'class' => 'form-control', 'maxlength' => 2, 'style' => 'width: 40px']) !!}
+                    {!! Form::text('mutation_year[i]', null, ['placeholder' => 'An', 'class' => 'form-control', 'maxlength' => 4, 'style' => 'width: 80px']) !!}
+                </div>
+                <div class="form-group form-toggle-option">
+                    {!! Form::select('mutation_proprietors[i][]', $proprietorsExtended, null, ['class' => 'form-control form-entity', 'multiple']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::text('mutation_comments[i]', null, ['placeholder' => 'Commentaires', 'class' => 'form-control']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::text('mutation_share[i]', null, ['placeholder' => 'Portion', 'class' => 'form-control']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::text('mutation_reason[i]', null, ['placeholder' => 'Raison', 'class' => 'form-control']) !!}
+                </div>
+                <button class="btn btn-danger df-delete" type="button">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <a href="#" class="btn btn-link form-view-entity" data-entity-type="proprietors">View propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
+            </div>
+            
+            <div class="df-container">
+                @if(isset($data))
+                @foreach ($data->parcelMutations as $i => $mutation)
+                <div class="form-inline form-group df-content-item">
+                    {!! Form::hidden('mutation_id[]', $mutation->id) !!}
+                    <div class="form-group">
+                        {!! Form::text('mutation_month[]', $mutation->month, ['placeholder' => 'Mois', 'class' => 'form-control', 'maxlength' => 2, 'style' => 'width: 40px']) !!}
+                        {!! Form::text('mutation_day[]', $mutation->day, ['placeholder' => 'Journée', 'class' => 'form-control', 'maxlength' => 2, 'style' => 'width: 40px']) !!}
+                        {!! Form::text('mutation_year[]', $mutation->year, ['placeholder' => 'An', 'class' => 'form-control', 'maxlength' => 4, 'style' => 'width: 80px']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::select('mutation_proprietors['.$i.'][]', $proprietorsExtended, $mutation->proprietorIDs, ['class' => 'form-control form-entity', 'multiple' => 'multiple']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::text('mutation_comments[]', $mutation->comments, ['placeholder' => 'Commentaires', 'class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::text('mutation_share[]', $mutation->share, ['placeholder' => 'Portion', 'class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::text('mutation_reason[]', $mutation->reason, ['placeholder' => 'Raison', 'class' => 'form-control']) !!}
+                    </div>
+                    <button class="btn btn-danger df-delete" type="button">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <a href="#" class="btn btn-link form-view-entity" data-entity-type="proprietors">View propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
+                </div>
+                @endforeach
+                @endif
+            </div>
+            
+            <div class="form-group">
+                <button class="btn btn-success df-add mousetrap" data-shortcut="alt+q" type="button">
+                    Add <span class="glyphicon glyphicon-plus"></span>
+                </button>
+                or <a href="{{ route('proprietors.create') }}" target="_blank">Create new Propriétaire <span class="glyphicon glyphicon-new-window"></span></a>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+
 <div class="form-group">
-    {!! Form::label('comments', 'Autre renseigment:', ['class' => 'control-label']) !!}
+    {!! Form::label('comments', 'Autres renseigments:', ['class' => 'control-label']) !!}
     {!! Form::textarea('comments', null, ['class' => 'form-control']) !!}
 </div>
 

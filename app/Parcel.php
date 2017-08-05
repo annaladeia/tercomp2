@@ -39,6 +39,11 @@ class Parcel extends Model
                     ->withTimestamps();
     }
     
+    public function parcelMutations()
+    {
+        return $this->hasMany('App\ParcelMutation');
+    }
+    
     public function parcelTypes()
     {
         return $this->belongsToMany('App\ParcelType')

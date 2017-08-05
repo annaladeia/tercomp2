@@ -66,7 +66,21 @@
     <dd>{{$data->sous}} @if ($data->sous != $data->sous_input) ou {{$data->sous_input}} @endif</dd>
     <dt>Denier(s)</dt>
     <dd>{{$data->denier}} @if ($data->denier != $data->denier_input) ou {{$data->denier_input}} @endif</dd>
-    <dt>Autre renseigment</dt>
+    <dt>Nouveaux Propriétaires</dt>
+    <dd>
+    @foreach ($data->parcelMutations as $mutation)
+    {{$mutation->day ? $mutation->day : '?'}}/{{$mutation->month ? $mutation->month : '?'}}/{{$mutation->year ? $mutation->year : '?'}}
+    
+    @foreach ($mutation->proprietors as $p)
+    <a href="{{ route('proprietors.show', $p->id) }}">{{$p->field_display}}</a>
+    @endforeach
+    @if (trim($mutation->comments)) ({{$mutation->comments}}) @endif
+    @if (trim($mutation->share)) ({{$mutation->share}}) @endif
+    @if (trim($mutation->reason)) ({{$mutation->reason}}) @endif
+    <br/>
+    @endforeach
+    </dd>
+    <dt>Autres renseigments</dt>
     <dd>{!! nl2br(e($data->comments)) !!}</dd>
 </dl>
 

@@ -7,7 +7,7 @@
 <hr>
 
 <dl class="dl-horizontal">
-    <dt>Autre renseigment</dt>
+    <dt>Autres renseigments</dt>
     <dd>{!! nl2br(e($data->comments)) !!}</dd>
 </dl>
 

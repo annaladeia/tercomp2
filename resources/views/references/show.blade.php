@@ -9,7 +9,7 @@
 <dl class="dl-horizontal">
     <dt>Type</dt>
     <dd>{{ $data->type == 1 ? 'ligne' : 'point'}}</dd>
-    <dt>Autre renseigment</dt>
+    <dt>Autres renseigments</dt>
     <dd>{!! nl2br(e($data->comments)) !!}</dd>
 </dl>
 
