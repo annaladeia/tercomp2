@@ -39,4 +39,9 @@ class ParcelConnection extends Model
     {
         return $this->belongsTo('App\Reference');
     }
+    
+    public function getOppositeOrientationAttribute()
+    {
+        return ($this->orientation + 1) % 4 + 1;
+    }
 }

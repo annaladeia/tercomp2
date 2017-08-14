@@ -20,9 +20,19 @@ var map = {
         }
     },
     
-    initCy: function(data) {
+    setLayout: function(name) {
+        var layout = this.cy.layout({
+            name: name
+        });
+        
+        layout.run();
+    },
     
-        var cy = cytoscape({
+    initCy: function(data) {
+        
+        var self = this;
+    
+        self.cy = cytoscape({
 
           container: this.$container[0],
         
@@ -39,18 +49,20 @@ var map = {
                 'content': 'data(label)',
                 'width': '50px',
                 'height': '50px',
-                'font-size': '15px'
+                'font-size': '15px',
+                'background-color': 'data(color)',
+                'z-index': 'data(zindex)'
               }
             }
           ]
         
         });
         
-        cy.on('select', function(evt){
+        self.cy.on('select', function(evt){
             evt.target.data({label: evt.target.data('id')});
         });
         
-        cy.on('unselect', function(evt) {
+        self.cy.on('unselect', function(evt) {
             evt.target.data({label: ''});
         });
     }

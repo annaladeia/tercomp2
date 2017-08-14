@@ -32,6 +32,7 @@
 <script src="/assets/js/libs/mousetrap.min.js"></script>
 <script src="/assets/js/libs/cytoscape.min.js"></script>
 <script src="/assets/js/libs/cytoscape-graphml.js"></script>
+<script src="/assets/js/libs/cytoscape-dagre.js"></script>
 <script src="//cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.js"></script>
 <script src="/assets/js/selectize.js"></script>
 <script src="/assets/js/dynamic-forms.js"></script>
