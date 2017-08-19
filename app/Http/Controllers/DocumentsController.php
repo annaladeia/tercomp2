@@ -152,7 +152,7 @@ class DocumentsController extends Controller
         return view('documents.map')->withData($data);
     }
     
-    public function generateMapJSON($id, $highlightPlace = 'Ville') {
+    public function generateMapJSON($id, $highlightPlace = 'Sirech', $excludeExceptPlace = false) {
         
         //create response array
         $response = array();
@@ -193,7 +193,7 @@ class DocumentsController extends Controller
         }
         
         //create structured arrays to prevent high number of sql queries
-        $proprietorsData = $document->proprietors()->with('parcels')->with('parcels.places')->with('parcels.proprietors')->with('parcels.parcelConnections')->get();
+        $proprietorsData = $document->proprietors()->with('parcels')->with('parcels.places')->with('parcels.proprietors')->with('parcels.parcelConnections')->with('parcels.parcelConnections.reference')->get();
         
         $proprietors = array();
         $parcels = array();
@@ -212,17 +212,24 @@ class DocumentsController extends Controller
                 
                 $color = $defaultColor;
                 $highlight = false;
+                $display = $excludeExceptPlace ? false : true;
                 
                 foreach ($pa->places as $pl) {
                     $color = $placeColors[$pl->id];
                     if ($pl->name == $highlightPlace) {
                         $highlight = true;
                     }
+                    
+                    if ($pl->name == $excludeExceptPlace) {
+                        $display = true;
+                    }
+                    
                     break;
                 }
                 
                 $proprietors[$pr->id]['parcels'][$pa->id]['color'] = $color;
                 $proprietors[$pr->id]['parcels'][$pa->id]['highlight'] = $highlight;
+                $proprietors[$pr->id]['parcels'][$pa->id]['display'] = $display;
                 
                 $numConnections = 0;
                 
@@ -250,19 +257,33 @@ class DocumentsController extends Controller
         //create array of finished parcels
         $finishedParcels = array();
         
+        //
+        
         //add first parcel to queue
         $parcelQueue[] = $parcels[$firstParcel];
         
         //set init x, y coordinates
         $parcelQueue[0]['x'] = 0;
         $parcelQueue[0]['y'] = 0;
+        
+        //init $grid array which holds number of items per coordinate
+        $grid = array();
             
         //draw first parcel
-        $response[] = ['data' => ['id' => $parcelQueue[0]['record']->id, 'zindex' => $parcelQueue[0]['highlight'] ? '9' : '0', 'color' => $parcelQueue[0]['color']], 'position' => ['x' => $parcelQueue[0]['x'], 'y' => $parcelQueue[0]['y']]];
+        if (! $parcelQueue[0]['display']) {
+            $response[] = ['data' => ['id' => $parcelQueue[0]['record']->id, 'zindex' => $parcelQueue[0]['highlight'] ? '9' : '0', 'color' => $parcelQueue[0]['color']], 'position' => ['x' => $parcelQueue[0]['x'], 'y' => $parcelQueue[0]['y']]];
+            $grid['0:0'][] = 0;
+        }
         
         $errors = 0;
         
         $i = 0;
+        $k = 0;
+        
+        $references = array();
+        
+        //sirech
+        
         //while parcelQueue has parcels...
         while (sizeof($parcelQueue) > 0 && $i < 5000) {
             $i++;
@@ -271,45 +292,30 @@ class DocumentsController extends Controller
             
             //loop over confronts
             foreach ($p['connections'] as $cID => $c) {
-                            
-                //set mututalConnection
-                $connectedParcel = false;
                 
-                //loop over neighbours (proprietors of connection's parcel)
-                foreach ($c['proprietors'] as $nID) {
+                $xyIndex = false;
+
+                if ($c['record']->reference && $p['display']) {
                     
-                    //loop over neighbour's parcels
-                    foreach ($proprietors[$nID]['parcels'] as $npID => $np) {
-                        
-                        //loop over confronts
-                        foreach ($np['connections'] as $npcID => $npc) {
-                            
-                            //skip iteration if confront is not with a proprietor
-                            if (! isset($connectionProprietors[$npcID]))
-                                continue;
-                            
-                            //skip iteration if confront is not opposite to parcel $p's connection's orientation
-                            if ($npc['record']->orientation != $c['record']->oppositeOrientation)
-                                continue;
-                                
-                            //check if at least one proprietor is one of the proprietors of parcel $p
-                            foreach ($npc['proprietors'] as $npcnID) {
-                                if (in_array($npcnID, $p['proprietors'])) {
-                                    $connectedParcel = $npID;
-                                }
-                            }
+                    $reference = $c['record']->reference;
+                    
+                    $drawReference = true;
+                    
+                    //calculate id
+                    if (isset($references[$reference->id])) {
+                        if ($reference->type == 2) { //reference is a fixed point (type 2) and has already been drawn
+                            $drawReference = false;
+                        } else {
+                            $references[$reference->id]++;
                         }
-                        
-                        //@todo: check if parcels has more than one confront with proprietor of parcel $p
+                    } else {
+                        $references[$reference->id] = 1;
                     }
-                    
-                }
-                
-                //check if connection is mutual
-                if ($connectedParcel) {
-                    
-                    if (! in_array($connectedParcel, $finishedParcels)) {
                         
+                    $id = 'reference_' . $reference->id . '_' . $references[$reference->id];
+                    
+                    if ($drawReference) {
+                    
                         //set x y 0 by default
                         $x = 0;
                         $y = 0;
@@ -330,23 +336,112 @@ class DocumentsController extends Controller
                                 break;
                         }
                         
-                        $parcels[$connectedParcel]['x'] = $p['x'] + ($x * 500);
-                        $parcels[$connectedParcel]['y'] = $p['y'] + ($y * 500);
+                        $x = $p['x'] + ($x * 500);
+                        $y = $p['y'] + ($y * 500);
                         
-                        $response[] = ['data' => ['id' => $connectedParcel, 'zindex' => $parcels[$connectedParcel]['highlight'] ? '9' : '0', 'color' => $parcels[$connectedParcel]['color']], 'position' => ['x' => $parcels[$connectedParcel]['x'], 'y' => $parcels[$connectedParcel]['y']]];
+                        $response[] = ['data' => ['id' => $id, 'name' => $reference->name, 'zindex' => '10', 'color' => 'orange'], 'position' => ['x' => $x, 'y' => $y]];
                         
-                        $parcelQueue[] = $parcels[$connectedParcel];
-                        $finishedParcels[] = $connectedParcel;
+                        $xyIndex = $x . ':' . $y;
+                        end($response);
+                        $responseIndex = key($response);
+                    
                     }
                     
-                    $response[] = ['data' => ['id' => 'connection_' . $cID, 'source' => $p['record']->id, 'target' => $connectedParcel]];
+                    $response[] = ['data' => ['id' => 'connection_' . $cID, 'style' => 'dotted', 'source' => $p['record']->id, 'color' => 'gray', 'target' => $id]];
                     
-                } else {
+                } elseif (sizeof($c['proprietors']) > 0) {
+
+                    $connectedParcel = false;
+
+                    //loop over neighbours (proprietors of connection's parcel)
+                    foreach ($c['proprietors'] as $nID) {
+                        
+                        //loop over neighbour's parcels
+                        foreach ($proprietors[$nID]['parcels'] as $npID => $np) {
+
+                            //loop over confronts
+                            foreach ($np['connections'] as $npcID => $npc) {
+
+                                $match = false;
+                                
+                                //skip iteration if confront is not with a proprietor
+                                if (! isset($connectionProprietors[$npcID]))
+                                    continue;
+                                
+                                //skip iteration if confront is not opposite to parcel $p's connection's orientation
+                                if ($npc['record']->orientation != $c['record']->oppositeOrientation)
+                                    continue;
+                                    
+                                //check if at least one proprietor is one of the proprietors of parcel $p
+                                foreach ($npc['proprietors'] as $npcnID) {
+                                    if (in_array($npcnID, $p['proprietors'])) {
+                                        $connectedParcel = $npID;
+                                    }
+                                }
+                            }
+                            
+                            //@todo: check if parcels has more than one confront with proprietor of parcel $p
+                        }
+                        
+                    }
                     
-                    //somehow the connection is not mutual
-                    $errors++; 
+                    //check if connection is mutual
+                    if ($connectedParcel) {
+                        
+                        if (! in_array($connectedParcel, $finishedParcels)) {
+                            
+                            //set x y 0 by default
+                            $x = 0;
+                            $y = 0;
+                            
+                            //draw connection
+                            switch ($c['record']->orientation) {
+                                case 1:
+                                    $y = 1;
+                                    break;
+                                case 2:
+                                    $x = 1;
+                                    break;
+                                case 3:
+                                    $y = -1;
+                                    break;
+                                case 4:
+                                    $x = -1;
+                                    break;
+                            }
+                            
+                            $parcels[$connectedParcel]['x'] = $p['x'] + ($x * 500);
+                            $parcels[$connectedParcel]['y'] = $p['y'] + ($y * 500);
+                            
+                            if ($parcels[$connectedParcel]['display']) {
+                                $response[] = ['data' => ['id' => $connectedParcel, 'zindex' => $parcels[$connectedParcel]['highlight'] ? '9' : '0', 'color' => $parcels[$connectedParcel]['color']], 'position' => ['x' => $parcels[$connectedParcel]['x'], 'y' => $parcels[$connectedParcel]['y']]];
+                            
+                                $xyIndex = $parcels[$connectedParcel]['x'] . ':' . $parcels[$connectedParcel]['y'];
+                                end($response);
+                                $responseIndex = key($response);
+                            }                            
+                            
+                            $parcelQueue[] = $parcels[$connectedParcel];
+                            $finishedParcels[] = $connectedParcel;
+                        }
+                        
+                        $response[] = ['data' => ['id' => 'connection_' . $cID, 'style' => 'dotted', 'source' => $p['record']->id, 'color' => 'gray', 'target' => $connectedParcel]];
+                        
+                    } else {
+                        
+                        //somehow the connection is not mutual
+                        $errors++; 
+                        
+                        //@todo: list this connection somewhere to be able to manually investigate
+                    }
+                }
                     
-                    //@todo: list this connection somewhere to be able to manually investigate
+                if ($xyIndex) {
+                    if (isset($grid[$xyIndex])) {
+                        $grid[$xyIndex][] = $responseIndex;
+                    } else {
+                        $grid[$xyIndex] = array($responseIndex);
+                    }
                 }
                 
                     
@@ -357,6 +452,67 @@ class DocumentsController extends Controller
             
             unset($parcelQueue[key($parcelQueue)]);
                         
+        }
+        
+        $pi = pi();
+        
+        $tempResponse = array();
+        
+        foreach($grid as $xy => $position) {
+            $items = sizeof($position);
+            
+            //echo $items . "\n";
+            
+            if ($items > 1) {
+
+                $xyArray = explode(':', $xy);
+                $x = $xyArray[0];
+                $y = $xyArray[1];
+                $i = 1;
+                
+                //echo $x . ' - ' . $y . "\n";
+                
+                foreach ($position as $p) {
+                     
+                    $theta = (($pi*2) / $items);
+                    $angle = ($theta * $i);
+                    
+                    // echo $p . ': ';
+                    // echo $response[$p]['position']['x'] . ' - ' . $response[$p]['position']['y'] . "\n";
+                
+                    $response[$p]['position']['x'] = (200 * cos($angle) + $x);
+                    $response[$p]['position']['y'] = (200 * sin($angle) + $y);
+                    
+                    $tempResponse[] = $response[$p];
+                    
+                    // echo $response[$p]['position']['x'];
+                    // echo ' - ';
+                    // echo $response[$p]['position']['y'];
+                    // echo "\n";
+                    
+                    $i++;
+                }
+                //die();
+                //break;
+            }
+        }
+        
+        foreach ($references as $referenceID => $ref) {
+            if ($ref > 1) {
+                
+                $id = false;
+                
+                for ($i = 1; $i <= $ref; $i++) {
+                    
+                    $currentID = 'reference_' . $referenceID . '_' . $i; 
+                    
+                    if ($id) {
+                        $response[] = ['data' => ['id' => 'connection_' . $referenceID . '_' . $i, 'style' => 'solid', 'color' => 'orange', 'source' => $id, 'target' => $currentID]];       
+                    }
+                    
+                    $id = $currentID;
+                }
+            }
         }
         
         return json_encode($response);

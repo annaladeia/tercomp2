@@ -10,3 +10,7 @@
 .navbar .form-control {
     margin-top: 8px;
 }
+
+.navbar {
+    z-index: 9;
+}

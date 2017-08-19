@@ -53,13 +53,26 @@ var map = {
                 'background-color': 'data(color)',
                 'z-index': 'data(zindex)'
               }
+            }, {
+                selector: 'edge',
+                style: {
+                    'line-color': 'data(color)',
+                    'line-style': 'data(style)'
+                }
             }
           ]
         
         });
         
         self.cy.on('select', function(evt){
-            evt.target.data({label: evt.target.data('id')});
+            var label;
+            
+            if (evt.target.data('name')) {
+                label = evt.target.data('name');
+            } else {
+                label = evt.target.data('id');
+            }
+            evt.target.data({label: label});
         });
         
         self.cy.on('unselect', function(evt) {
