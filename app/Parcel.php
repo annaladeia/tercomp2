@@ -66,4 +66,15 @@ class Parcel extends Model
         $name = $this->name;
         return $name;
     }
+    
+    public function getFieldUncertainAttribute()
+    {
+        $uncertain = false;
+        
+        foreach ($this->parcelConnections as $pc) {
+            $uncertain = $uncertain || $pc->uncertain;
+        }
+        
+        return $uncertain;
+    }
 }

@@ -30,7 +30,7 @@ class ProprietorsController extends Controller
         
         if ($document) {
             
-            $data = $document->proprietors;
+            $data = Proprietor::with('relatedProprietors')->with('professions')->where('document_id', $document->id)->get();
             
         }
 

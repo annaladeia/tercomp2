@@ -35,7 +35,7 @@ class ParcelsController extends Controller
         
         if ($document) {
             
-            $data = $document->parcels;
+            $data = Parcel::with('proprietors')->with('proprietors.relatedProprietors')->with('places')->with('parcelTypes')->with('parcelConnections')->where('document_id', $document->id)->get();
             
         }
 
