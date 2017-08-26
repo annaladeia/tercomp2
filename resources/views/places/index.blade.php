@@ -33,6 +33,7 @@
             <td></td>
             <th>#</th>
             <th>Nom</th>
+            <th>Couleur</th>
             <th class="table__buttons no-sort"></th>
         </tr>
     </thead>
@@ -42,6 +43,7 @@
             <td>{!! Form::checkbox('items[]', $item->id, 0, ['class' => 'js-replace-item']) !!}</td>
             <td>{{ $item->id }}</td>
             <td>{{ $item->name }}</td>
+            <td>{{ $item->color }}</td>
             <td class="table__buttons text-right"><a href="{{ route('places.show', $item->id) }}" title="View record" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
             <a href="{{ route('places.edit', $item->id) }}" title="Edit record" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>&nbsp;
             {!! Form::open([

@@ -152,7 +152,7 @@ class DocumentsController extends Controller
         return view('documents.map')->withData($data);
     }
     
-    public function generateMapJSON($id, $highlightPlace = 'Sirech', $excludeExceptPlace = false) {
+    public function generateMapJSON($id, $highlightPlace = '', $excludeExceptPlace = false) {
         
         //create response array
         $response = array();
@@ -171,7 +171,7 @@ class DocumentsController extends Controller
             if ($p->name == $highlightPlace) {
                 $color = 'red';
             } else {
-                $color = 'gray';
+                $color = $p->color ? $p->color : 'gray';
             }
             
             $placeColors[$p->id] = $color;

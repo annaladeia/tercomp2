@@ -7,6 +7,8 @@
 <hr>
 
 <dl class="dl-horizontal">
+    <dt>Couleur</dt>
+    <dd>{!! nl2br(e($data->color)) !!}</dd>
     <dt>Autres renseigments</dt>
     <dd>{!! nl2br(e($data->comments)) !!}</dd>
 </dl>

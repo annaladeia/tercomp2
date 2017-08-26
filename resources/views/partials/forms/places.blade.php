@@ -19,6 +19,11 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('color', 'Couleur:', ['class' => 'control-label']) !!}
+    {!! Form::text('color', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group">
     {!! Form::label('comments', 'Autres renseigments:', ['class' => 'control-label']) !!}
     {!! Form::textarea('comments', null, ['class' => 'form-control']) !!}
 </div>
