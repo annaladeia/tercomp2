@@ -42,6 +42,10 @@ class ParcelConnection extends Model
     
     public function getOppositeOrientationAttribute()
     {
-        return ($this->orientation + 1) % 4 + 1;
+        if ($this->orientation > 0) {
+            return ($this->orientation + 1) % 4 + 1;
+        } else {
+            return -1;
+        }
     }
 }
